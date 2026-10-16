@@ -77,7 +77,7 @@ export function Navbar() {
             Properties
           </Link>
           <Link
-            href="#why-choose-us"
+            href="#services"
             className={`transition-colors duration-300 ${
               scrolled
                 ? "text-zinc-700 hover:text-zinc-950"
@@ -196,7 +196,7 @@ export function Navbar() {
           Properties
         </Link>
         <Link
-          href="#why-choose-us"
+          href="#services"
           onClick={() => setMobileOpen(false)}
           className="text-white hover:text-zinc-300 text-xl font-heading"
         >

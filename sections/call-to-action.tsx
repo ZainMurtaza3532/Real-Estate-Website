@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -36,15 +37,17 @@ export function CallToAction() {
           Explore premium homes, modern apartments and investment opportunities in the most desirable locations.
         </motion.p>
 
-        <motion.button className="bg-black hover:bg-zinc-900 text-white text-sm px-5 py-3.5 rounded-lg transition-all duration-200 flex items-center gap-2 group cursor-pointer"
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
-        >
-          <span>Browse Properties</span>
-          <MoveRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
-        </motion.button>
+        <Link href="/properties">
+          <motion.button className="bg-black hover:bg-zinc-900 text-white text-sm px-5 py-3.5 rounded-lg transition-all duration-200 flex items-center gap-2 group cursor-pointer"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+          >
+            <span>Browse Properties</span>
+            <MoveRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
+          </motion.button>
+        </Link>
       </div>
     </section>
   );

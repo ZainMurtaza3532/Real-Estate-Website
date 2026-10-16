@@ -24,7 +24,7 @@ export function Footer() {
             <div className="flex flex-col gap-5">
               <span className="text-white">Explore</span>
               <div className="flex flex-col gap-3 text-xs text-zinc-300">
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a href="/" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -32,7 +32,7 @@ export function Footer() {
                 >
                   Home
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a href="/properties" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -40,7 +40,7 @@ export function Footer() {
                 >
                   Properties
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a href="/properties" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -48,21 +48,21 @@ export function Footer() {
                 >
                   Neighborhoods
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a href="#contact" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                 >
-                  Agents
+                  Private Advisors
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a href="#testimonials" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                 >
-                  Reviews
+                  Client Reviews
                 </motion.a>
               </div>
             </div>

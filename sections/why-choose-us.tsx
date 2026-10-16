@@ -11,7 +11,7 @@ export function WhyChooseUs() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
-        <section className="py-16 mt-28 px-4 md:px-16 lg:px-24 xl:px-32 w-full bg-gray-50">
+        <section id="services" className="py-16 mt-28 px-4 md:px-16 lg:px-24 xl:px-32 w-full bg-gray-50 scroll-mt-24">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-24">
                 {/* Left Column */}
                 <div className="flex flex-col">

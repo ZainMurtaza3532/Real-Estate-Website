@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { InquiryStatus } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const InquirySchema = z.object({
   propertyId: z.string().min(1, "Property reference is required"),
@@ -83,6 +84,12 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
       },
     });
 
+    try {
+      revalidatePath("/dashboard");
+    } catch {
+      // Ignore outside request context
+    }
+
     return {
       success: true,
       message: `Your private tour request for ${propertyExists.title} has been received. Our luxury advisor will contact you promptly.`,
@@ -95,6 +102,100 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
         error instanceof Error
           ? error.message
           : "An unexpected error occurred while scheduling your tour.",
+    };
+  }
+}
+
+const ContactFormSchema = z.object({
+  name: z.string().min(2, "Please enter your name (at least 2 characters)"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().optional().or(z.literal("")),
+  subject: z.string().optional().or(z.literal("")),
+  message: z.string().min(5, "Please enter a message (at least 5 characters)"),
+});
+
+export type ContactFormInput = z.infer<typeof ContactFormSchema>;
+
+export async function submitContactForm(data: ContactFormInput): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  fieldErrors?: Record<string, string[]>;
+}> {
+  try {
+    const parsed = ContactFormSchema.safeParse(data);
+    if (!parsed.success) {
+      const fieldErrors = parsed.error.flatten().fieldErrors;
+      const firstErrorMessage =
+        Object.values(fieldErrors).flat()[0] || "Invalid contact form submission";
+      return {
+        success: false,
+        error: firstErrorMessage,
+        fieldErrors,
+      };
+    }
+
+    const { name, email, phone, subject, message } = parsed.data;
+
+    // Associate general contact with primary/featured property so it links in DB
+    const property =
+      (await prisma.property.findFirst({
+        where: { featured: true },
+        select: { id: true, title: true },
+      })) ||
+      (await prisma.property.findFirst({
+        select: { id: true, title: true },
+      }));
+
+    if (!property) {
+      return {
+        success: false,
+        error: "Unable to route inquiry: No active property found in catalog.",
+      };
+    }
+
+    let userId: string | null = null;
+    try {
+      const session = await auth();
+      userId = session?.user?.id || null;
+    } catch {
+      userId = null;
+    }
+
+    const fullMessage = subject && subject.trim() !== ""
+      ? `[Topic: ${subject.trim()}] ${message.trim()}`
+      : message.trim();
+
+    await prisma.inquiry.create({
+      data: {
+        propertyId: property.id,
+        userId,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone?.trim() || null,
+        message: fullMessage,
+        status: InquiryStatus.PENDING,
+      },
+    });
+
+    try {
+      revalidatePath("/dashboard");
+    } catch {
+      // Ignore outside request context
+    }
+
+    return {
+      success: true,
+      message: "Thank you for reaching out! Our advisory team will connect with you within 24 hours.",
+    };
+  } catch (error: unknown) {
+    console.error("Failed to submit contact inquiry:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred while submitting your message.",
     };
   }
 }

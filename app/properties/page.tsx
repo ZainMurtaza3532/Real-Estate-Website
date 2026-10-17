@@ -3,10 +3,11 @@ import { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma, PropertyType, ListingType } from "@prisma/client";
+import Link from "next/link";
 import { PropertyCard } from "@/components/properties/property-card";
 import { PropertyFilters } from "@/components/properties/property-filters";
 import { PropertyEmptyState } from "@/components/properties/property-empty-state";
-import { Sparkles, Building2, SlidersHorizontal } from "lucide-react";
+import { Sparkles, Building2, SlidersHorizontal, ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Luxury Residences & Estates | PrebuiltUI Portfolio",
@@ -109,6 +110,15 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 pt-28 md:pt-36 pb-24 px-4 sm:px-6 md:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto space-y-8">
+        {/* Navigation Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-zinc-500">
+          <Link href="/" className="hover:text-zinc-950 transition-colors">
+            Home
+          </Link>
+          <ChevronRight className="size-3 text-zinc-400" />
+          <span className="text-zinc-950 font-semibold">Properties</span>
+        </nav>
+
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-zinc-200">
           <div>

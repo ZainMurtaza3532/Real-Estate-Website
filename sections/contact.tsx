@@ -48,7 +48,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 w-full flex items-center justify-center scroll-mt-20">
+    <section id="contact" className="pt-24 pb-8 md:pb-12 w-full flex items-center justify-center scroll-mt-20">
       <div className="max-w-5xl w-full mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Left Column: Contact Form */}
         <div className="flex flex-col">

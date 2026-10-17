@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { NavbarUserMenu } from "@/components/navbar-user-menu";
@@ -19,6 +20,7 @@ export function Navbar() {
   const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +30,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isHome = pathname === "/";
+  const isLightMode = scrolled || !isHome;
+  const isPill = scrolled || !isHome;
+
   const isAgentOrAdmin =
     session?.user?.role === "AGENT" || session?.user?.role === "ADMIN";
 
@@ -36,8 +42,8 @@ export function Navbar() {
       <nav
         aria-label="Main Navigation"
         className={`fixed z-40 flex items-center justify-between left-1/2 -translate-x-1/2 transition-all duration-500 py-3.5 px-6 ${
-          scrolled
-            ? "lg:w-5xl w-[calc(100vw-24px)] bg-white/90 backdrop-blur-xl rounded-full mt-4 border border-zinc-200/80 shadow-md"
+          isPill
+            ? "lg:w-5xl w-[calc(100vw-24px)] bg-white/95 backdrop-blur-xl rounded-full mt-4 border border-zinc-200/80 shadow-md"
             : "md:px-16 lg:px-24 xl:px-32 w-full pt-6"
         }`}
       >
@@ -49,7 +55,7 @@ export function Navbar() {
             alt="PrebuiltUI Estate"
             style={{ width: "auto", height: "auto" }}
             className={`transition-all duration-500 h-8 w-auto ${
-              scrolled ? "invert opacity-90" : "brightness-200"
+              isLightMode ? "invert opacity-90" : "brightness-200"
             }`}
           />
         </Link>
@@ -59,9 +65,13 @@ export function Navbar() {
           <Link
             href="/"
             className={`transition-colors duration-300 ${
-              scrolled
-                ? "text-zinc-700 hover:text-zinc-950"
-                : "text-white/90 hover:text-white"
+              pathname === "/"
+                ? isLightMode
+                  ? "text-zinc-950 font-bold"
+                  : "text-white font-bold"
+                : isLightMode
+                ? "text-zinc-600 hover:text-zinc-950"
+                : "text-white/80 hover:text-white"
             }`}
           >
             Home
@@ -69,39 +79,43 @@ export function Navbar() {
           <Link
             href="/properties"
             className={`transition-colors duration-300 ${
-              scrolled
-                ? "text-zinc-700 hover:text-zinc-950"
-                : "text-white/90 hover:text-white"
+              pathname.startsWith("/properties")
+                ? isLightMode
+                  ? "text-zinc-950 font-bold"
+                  : "text-white font-bold"
+                : isLightMode
+                ? "text-zinc-600 hover:text-zinc-950"
+                : "text-white/80 hover:text-white"
             }`}
           >
             Properties
           </Link>
           <Link
-            href="#services"
+            href="/#services"
             className={`transition-colors duration-300 ${
-              scrolled
-                ? "text-zinc-700 hover:text-zinc-950"
-                : "text-white/90 hover:text-white"
+              isLightMode
+                ? "text-zinc-600 hover:text-zinc-950"
+                : "text-white/80 hover:text-white"
             }`}
           >
             Services
           </Link>
           <Link
-            href="#testimonials"
+            href="/#testimonials"
             className={`transition-colors duration-300 ${
-              scrolled
-                ? "text-zinc-700 hover:text-zinc-950"
-                : "text-white/90 hover:text-white"
+              isLightMode
+                ? "text-zinc-600 hover:text-zinc-950"
+                : "text-white/80 hover:text-white"
             }`}
           >
             Testimonials
           </Link>
           <Link
-            href="#contact"
+            href="/#contact"
             className={`transition-colors duration-300 ${
-              scrolled
-                ? "text-zinc-700 hover:text-zinc-950"
-                : "text-white/90 hover:text-white"
+              isLightMode
+                ? "text-zinc-600 hover:text-zinc-950"
+                : "text-white/80 hover:text-white"
             }`}
           >
             Contact
@@ -116,7 +130,7 @@ export function Navbar() {
                 <Link
                   href="/dashboard"
                   className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                    scrolled
+                    isLightMode
                       ? "bg-zinc-900 text-white hover:bg-zinc-800"
                       : "bg-white text-zinc-900 hover:bg-zinc-100"
                   }`}
@@ -133,7 +147,7 @@ export function Navbar() {
               <Link
                 href="/login"
                 className={`px-4 py-2 text-sm font-medium transition-colors ${
-                  scrolled
+                  isLightMode
                     ? "text-zinc-700 hover:text-zinc-950"
                     : "text-white hover:text-white/80"
                 }`}
@@ -144,7 +158,7 @@ export function Navbar() {
               <Link
                 href="/signup"
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-xs ${
-                  scrolled
+                  isLightMode
                     ? "bg-zinc-900 text-white hover:bg-zinc-800"
                     : "bg-white text-zinc-900 hover:bg-zinc-100"
                 }`}
@@ -160,7 +174,7 @@ export function Navbar() {
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
           className={`md:hidden p-2 rounded-xl transition cursor-pointer ${
-            scrolled ? "text-zinc-800" : "text-white"
+            isLightMode ? "text-zinc-800 hover:bg-zinc-100" : "text-white hover:bg-white/10"
           }`}
         >
           <Menu className="size-6" />
@@ -196,14 +210,21 @@ export function Navbar() {
           Properties
         </Link>
         <Link
-          href="#services"
+          href="/#services"
           onClick={() => setMobileOpen(false)}
           className="text-white hover:text-zinc-300 text-xl font-heading"
         >
           Services
         </Link>
         <Link
-          href="#contact"
+          href="/#testimonials"
+          onClick={() => setMobileOpen(false)}
+          className="text-white hover:text-zinc-300 text-xl font-heading"
+        >
+          Testimonials
+        </Link>
+        <Link
+          href="/#contact"
           onClick={() => setMobileOpen(false)}
           className="text-white hover:text-zinc-300 text-xl font-heading"
         >

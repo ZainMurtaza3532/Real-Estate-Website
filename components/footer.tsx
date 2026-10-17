@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white pt-16 pb-8 mt-32 px-4 md:px-16 lg:px-24 xl:px-32 w-full overflow-hidden">
+    <footer className="bg-black text-white pt-16 pb-8 mt-0 px-4 md:px-16 lg:px-24 xl:px-32 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16">
 

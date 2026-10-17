@@ -22,7 +22,7 @@ export default async function FavoritesPage() {
     include: {
       property: {
         include: {
-          agent: {
+          seller: {
             select: {
               name: true,
               agencyName: true,

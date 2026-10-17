@@ -35,7 +35,9 @@ export function Navbar() {
   const isPill = scrolled || !isHome;
 
   const isAgentOrAdmin =
-    session?.user?.role === "AGENT" || session?.user?.role === "ADMIN";
+    session?.user?.role === "SELLER" ||
+    session?.user?.role === "AGENT" ||
+    session?.user?.role === "ADMIN";
 
   return (
     <>
@@ -125,23 +127,7 @@ export function Navbar() {
         {/* Auth / User Menu button */}
         <div className="hidden md:flex items-center gap-3">
           {status === "authenticated" && session?.user ? (
-            <div className="flex items-center gap-3">
-              {isAgentOrAdmin && (
-                <Link
-                  href="/dashboard"
-                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                    isLightMode
-                      ? "bg-zinc-900 text-white hover:bg-zinc-800"
-                      : "bg-white text-zinc-900 hover:bg-zinc-100"
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <LayoutDashboard className="size-3.5" /> Dashboard
-                  </span>
-                </Link>
-              )}
-              <NavbarUserMenu />
-            </div>
+            <NavbarUserMenu />
           ) : (
             <div className="flex items-center gap-2">
               <Link

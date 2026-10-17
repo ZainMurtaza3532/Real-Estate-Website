@@ -86,6 +86,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.id = user.id;
         token.role = (user.role as UserRole) || "BUYER";
         token.phone = user.phone;
+        token.whatsappNumber = user.whatsappNumber;
         token.agencyName = user.agencyName;
       }
 
@@ -95,17 +96,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.role = session.user.role;
       }
 
-      // Ensure role is always populated from DB if missing
-      if (!token.role && token.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email },
-          select: { id: true, role: true, phone: true, agencyName: true },
-        });
-        if (dbUser) {
-          token.id = dbUser.id;
-          token.role = dbUser.role as UserRole;
-          token.phone = dbUser.phone;
-          token.agencyName = dbUser.agencyName;
+      // Always sync fresh role and contact details from DB so promotions to ADMIN take effect immediately
+      if (token.email) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: token.email },
+            select: { id: true, role: true, phone: true, agencyName: true, whatsappNumber: true },
+          });
+          if (dbUser) {
+            token.id = dbUser.id;
+            token.role = dbUser.role as UserRole;
+            token.phone = dbUser.phone;
+            token.whatsappNumber = dbUser.whatsappNumber;
+            token.agencyName = dbUser.agencyName;
+          }
+        } catch {
+          // Fall back to existing token values if DB is unreachable
         }
       }
 
@@ -116,6 +122,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = (token.id as string) || (token.sub as string);
         session.user.role = (token.role as UserRole) || "BUYER";
         session.user.phone = token.phone as string | null | undefined;
+        session.user.whatsappNumber = token.whatsappNumber as string | null | undefined;
         session.user.agencyName = token.agencyName as string | null | undefined;
       }
       return session;

@@ -1,13 +1,14 @@
 import { DefaultSession } from "next-auth";
 import { JWT as DefaultJWT } from "next-auth/jwt";
 
-export type UserRole = "BUYER" | "AGENT" | "ADMIN";
+export type UserRole = "BUYER" | "SELLER" | "ADMIN" | "AGENT";
 
 declare module "next-auth" {
   interface User {
     id: string;
     role: UserRole;
     phone?: string | null;
+    whatsappNumber?: string | null;
     agencyName?: string | null;
   }
 
@@ -16,6 +17,7 @@ declare module "next-auth" {
       id: string;
       role: UserRole;
       phone?: string | null;
+      whatsappNumber?: string | null;
       agencyName?: string | null;
     } & DefaultSession["user"];
   }
@@ -26,6 +28,7 @@ declare module "next-auth/jwt" {
     id?: string;
     role?: UserRole;
     phone?: string | null;
+    whatsappNumber?: string | null;
     agencyName?: string | null;
   }
 }

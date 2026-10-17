@@ -36,9 +36,9 @@ export async function POST(req: Request) {
     }
 
     // Default role is BUYER; sanitize allowed requested roles
-    let assignedRole: "BUYER" | "AGENT" | "ADMIN" = "BUYER";
-    if (role === "AGENT") {
-      assignedRole = "AGENT";
+    let assignedRole: "BUYER" | "SELLER" | "ADMIN" = "BUYER";
+    if (role === "AGENT" || role === "SELLER") {
+      assignedRole = "SELLER";
     }
 
     // Hash the password securely

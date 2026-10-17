@@ -21,6 +21,12 @@ import { submitPropertyInquiry } from "@/actions/inquiries";
 interface TourInquiryFormProps {
   propertyId: string;
   propertyTitle: string;
+  seller?: {
+    name: string | null;
+    agencyName: string | null;
+    image: string | null;
+    phone?: string | null;
+  } | null;
   agent?: {
     name: string | null;
     agencyName: string | null;
@@ -36,9 +42,11 @@ interface TourInquiryFormProps {
 export function TourInquiryForm({
   propertyId,
   propertyTitle,
+  seller,
   agent,
   currentUser,
 }: TourInquiryFormProps) {
+  const sellerInfo = seller || agent;
   const [isPending, startTransition] = useTransition();
   const [tourType, setTourType] = useState<"IN_PERSON" | "VIDEO">("IN_PERSON");
   const [submitted, setSubmitted] = useState(false);
@@ -48,14 +56,23 @@ export function TourInquiryForm({
     email: currentUser?.email || "",
     phone: "",
     tourDate: "",
-    message: `Hello, I would like to arrange a private ${tourType === "IN_PERSON" ? "in-person" : "virtual video"} tour of ${propertyTitle}. Please contact me with available viewing appointments.`,
+    tourTime: "11:30 AM - Midday Showing",
+    message: `Hello, I would like to arrange a private ${tourType === "IN_PERSON" ? "in-person" : "virtual video"} viewing of ${propertyTitle}. Please contact me with available viewing appointments.`,
   });
+
+  const TIME_SLOTS = [
+    "10:00 AM - Morning VIP",
+    "11:30 AM - Midday Showing",
+    "02:00 PM - Afternoon Tour",
+    "04:00 PM - Late Afternoon",
+    "05:30 PM - Sunset Showing",
+  ];
 
   const handleTourTypeChange = (type: "IN_PERSON" | "VIDEO") => {
     setTourType(type);
     setFormData((prev) => ({
       ...prev,
-      message: `Hello, I would like to arrange a private ${type === "IN_PERSON" ? "in-person" : "virtual video"} tour of ${propertyTitle}. Please contact me with available viewing appointments.`,
+      message: `Hello, I would like to arrange a private ${type === "IN_PERSON" ? "in-person" : "virtual video"} viewing of ${propertyTitle}. Please contact me with available viewing appointments.`,
     }));
   };
 
@@ -69,12 +86,13 @@ export function TourInquiryForm({
         email: formData.email,
         phone: formData.phone,
         tourDate: formData.tourDate,
+        tourTime: formData.tourTime,
         message: formData.message,
       });
 
       if (result.success) {
-        toast.success("Private Tour Requested!", {
-          description: result.message || "An advisor will reach out to confirm your slot.",
+        toast.success("Private Viewing Scheduled!", {
+          description: result.message || "Seller notified via email & SMS.",
           duration: 6000,
         });
         setSubmitted(true);
@@ -87,49 +105,20 @@ export function TourInquiryForm({
   };
 
   return (
-    <div className="sticky top-28 rounded-3xl bg-white border border-zinc-200/90 shadow-lg p-6 md:p-7">
+    <div className="rounded-3xl bg-white border border-zinc-200/90 shadow-md p-6 md:p-7">
       {/* Header */}
       <div className="flex items-center justify-between pb-5 border-b border-zinc-100">
         <div>
           <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider block mb-1">
-            VIP Showing
+            VIP Showing Appointment
           </span>
           <h3 className="font-heading text-xl font-bold text-zinc-950">
-            Schedule a Private Tour
+            Schedule a Private Viewing
           </h3>
         </div>
         <span className="p-2 rounded-xl bg-zinc-100 text-zinc-800">
           <Calendar className="size-5" />
         </span>
-      </div>
-
-      {/* Assigned Agent Card */}
-      <div className="flex items-center gap-3.5 my-5 p-3.5 rounded-2xl bg-zinc-50 border border-zinc-100">
-        <div className="relative size-12 rounded-full overflow-hidden shrink-0 border border-zinc-200 bg-zinc-200">
-          {agent?.image ? (
-            <Image
-              src={agent.image}
-              alt={agent.name || "Real Estate Advisor"}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="size-full flex items-center justify-center font-bold text-zinc-600 text-sm">
-              {agent?.name?.[0] || "A"}
-            </div>
-          )}
-        </div>
-        <div className="leading-tight truncate">
-          <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wide block">
-            Listing Advisor
-          </span>
-          <p className="font-semibold text-sm text-zinc-950 truncate">
-            {agent?.name || "PrebuiltUI Private Brokerage"}
-          </p>
-          <p className="text-xs text-zinc-500 truncate">
-            {agent?.agencyName || "Licensed Real Estate Specialist"}
-          </p>
-        </div>
       </div>
 
       {/* Success State */}
@@ -139,11 +128,20 @@ export function TourInquiryForm({
             <CheckCircle2 className="size-7" />
           </div>
           <h4 className="font-heading text-lg font-bold text-zinc-950">
-            Tour Request Confirmed
+            Private Viewing Scheduled!
           </h4>
-          <p className="text-xs text-zinc-500 max-w-xs mx-auto leading-relaxed">
-            Thank you, {formData.name}. Our luxury advisory team has received your inquiry for {propertyTitle} and will contact you via email or phone within 2 hours.
+          <p className="text-xs text-zinc-600 max-w-xs mx-auto leading-relaxed">
+            Thank you, <strong>{formData.name}</strong>. Your showing request for <strong>{formData.tourDate || "an upcoming date"}</strong> at <strong>{formData.tourTime}</strong> has been logged.
           </p>
+          <div className="p-3 bg-zinc-50 rounded-2xl border border-zinc-200 text-[11px] text-zinc-500 max-w-xs mx-auto text-left space-y-1">
+            <p className="flex items-center gap-1.5 font-semibold text-zinc-800">
+              <Mail className="size-3 text-emerald-600" />
+              <span>Seller Alert Dispatched</span>
+            </p>
+            <p>
+              An instant email & SMS notification was sent to the property owner. They will connect with you via phone or WhatsApp to confirm access.
+            </p>
+          </div>
           <button
             onClick={() => setSubmitted(false)}
             className="text-xs font-semibold text-zinc-900 underline hover:text-black mt-2 inline-block cursor-pointer"
@@ -152,7 +150,7 @@ export function TourInquiryForm({
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 mt-5">
           {/* Tour Type Toggle */}
           <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-zinc-100 border border-zinc-200/80">
             <button
@@ -224,7 +222,7 @@ export function TourInquiryForm({
           {/* Phone */}
           <div>
             <label className="block text-[11px] font-semibold text-zinc-700 uppercase tracking-wider mb-1">
-              Phone Number
+              Phone Number (For Showing Confirmation)
             </label>
             <div className="relative">
               <input
@@ -240,22 +238,50 @@ export function TourInquiryForm({
             </div>
           </div>
 
-          {/* Preferred Date */}
-          <div>
-            <label className="block text-[11px] font-semibold text-zinc-700 uppercase tracking-wider mb-1">
-              Preferred Viewing Date
-            </label>
-            <div className="relative">
-              <input
-                type="date"
-                min={new Date().toISOString().split("T")[0]}
-                value={formData.tourDate}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, tourDate: e.target.value }))
-                }
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
-              />
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-400" />
+          {/* Date & Time Picker */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Preferred Date */}
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-700 uppercase tracking-wider mb-1">
+                Viewing Date *
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  required
+                  min={new Date().toISOString().split("T")[0]}
+                  value={formData.tourDate}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, tourDate: e.target.value }))
+                  }
+                  className="w-full pl-9 pr-2 py-2.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-400" />
+              </div>
+            </div>
+
+            {/* Preferred Time */}
+            <div>
+              <label className="block text-[11px] font-semibold text-zinc-700 uppercase tracking-wider mb-1">
+                Viewing Time *
+              </label>
+              <div className="relative">
+                <select
+                  required
+                  value={formData.tourTime}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, tourTime: e.target.value }))
+                  }
+                  className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-900 focus:outline-none focus:ring-1 focus:ring-black focus:border-black appearance-none cursor-pointer"
+                >
+                  {TIME_SLOTS.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
+                </select>
+                <Clock className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-400" />
+              </div>
             </div>
           </div>
 

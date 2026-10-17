@@ -1,5 +1,5 @@
-// Production-Grade Prisma Schema for Real Estate Application
-// Database: PostgreSQL (Neon / Supabase / Self-hosted)
+// Production-Grade Prisma Schema for Multi-Role Real Estate Marketplace
+// Database: PostgreSQL (Neon / Supabase / AWS RDS / Self-hosted)
 
 generator client {
   provider = "prisma-client-js"
@@ -10,9 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ----------------------------------------------------
+// ENUMS
+// ----------------------------------------------------
+
 enum Role {
   BUYER
-  AGENT
+  SELLER
   ADMIN
 }
 
@@ -20,6 +24,8 @@ enum PropertyType {
   HOUSE
   APARTMENT
   VILLA
+  COMMERCIAL
+  PLOT
   PENTHOUSE
 }
 
@@ -28,75 +34,142 @@ enum ListingType {
   FOR_RENT
 }
 
-enum PropertyStatus {
-  AVAILABLE
-  PENDING
+enum ListingStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
   SOLD
 }
 
 enum InquiryStatus {
-  PENDING
+  NEW
   CONTACTED
+  SCHEDULED
   CLOSED
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?   // Hashed password with bcrypt (cost 12)
-  image         String?
-  role          Role      @default(BUYER)
-  phone         String?
-  agencyName    String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+// ----------------------------------------------------
+// USER MODEL
+// ----------------------------------------------------
 
-  properties    Property[]
-  inquiries     Inquiry[]
-  favorites     Favorite[]
-  accounts      Account[]
-  sessions      Session[]
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  password       String?   // Hashed with bcrypt (cost 12)
+  image          String?
+  phone          String?
+  whatsappNumber String?
+  role           Role      @default(BUYER)
+  isVerified     Boolean   @default(false)
+  agencyName     String?
+
+  // Relations
+  properties     Property[] @relation("SellerProperties")
+  inquiries      Inquiry[]  @relation("BuyerInquiries")
+  leads          Inquiry[]  @relation("SellerInquiries")
+  favorites      Favorite[]
+
+  // Auth.js / NextAuth Support
+  accounts       Account[]
+  sessions       Session[]
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([role, isVerified])
+  @@index([email])
 }
+
+// ----------------------------------------------------
+// PROPERTY MODEL
+// ----------------------------------------------------
 
 model Property {
-  id           String         @id @default(cuid())
-  title        String
-  slug         String         @unique
-  description  String         @db.Text
-  price        Float
-  propertyType PropertyType
-  listingType  ListingType
-  status       PropertyStatus @default(AVAILABLE)
+  id            String        @id @default(cuid())
+  title         String
+  slug          String        @unique
+  description   String        @db.Text
+  price         Float
+  currency      String        @default("USD")
+  propertyType  PropertyType
+  listingType   ListingType
+  listingStatus ListingStatus @default(PENDING_APPROVAL)
 
-  bedrooms     Int
-  bathrooms    Int
-  areaSqFt     Float
-  garage       Int            @default(0)
+  bedrooms      Int           @default(0)
+  bathrooms     Int           @default(0)
+  areaSqFt      Float
+  garageSpaces  Int           @default(0)
+  yearBuilt     Int?
 
-  address      String
-  city         String
-  state        String
-  zipCode      String
-  latitude     Float?
-  longitude    Float?
+  address       String
+  city          String
+  state         String
+  zipCode       String
+  latitude      Float?
+  longitude     Float?
 
-  images       String[]
-  amenities    String[]
-  featured     Boolean        @default(false)
+  images        String[]
+  videoTourUrl  String?
+  amenities     String[]
+  featured      Boolean       @default(false)
+  viewsCount    Int           @default(0)
+  rejectionReason String?     @db.Text
 
-  agentId      String
-  agent        User           @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  // Seller Reference
+  sellerId      String
+  seller        User          @relation("SellerProperties", fields: [sellerId], references: [id], onDelete: Cascade)
 
-  favorites    Favorite[]
-  inquiries    Inquiry[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  // Relations
+  favorites     Favorite[]
+  inquiries     Inquiry[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@index([city, price])
-  @@index([propertyType, listingType, status])
+  @@index([propertyType, listingType, listingStatus])
+  @@index([sellerId])
+  @@index([featured])
+  @@index([createdAt(sort: Desc)])
 }
+
+// ----------------------------------------------------
+// INQUIRY / LEAD MODEL
+// ----------------------------------------------------
+
+model Inquiry {
+  id         String        @id @default(cuid())
+  propertyId String
+  sellerId   String
+  buyerId    String?
+
+  buyerName  String
+  buyerEmail String
+  buyerPhone String?
+  message    String        @db.Text
+  tourDate   DateTime?
+  tourTime   String?
+  status     InquiryStatus @default(NEW)
+
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  property   Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  seller     User          @relation("SellerInquiries", fields: [sellerId], references: [id], onDelete: Cascade)
+  buyer      User?         @relation("BuyerInquiries", fields: [buyerId], references: [id], onDelete: SetNull)
+
+  @@index([propertyId])
+  @@index([sellerId])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+}
+
+// ----------------------------------------------------
+// FAVORITE MODEL
+// ----------------------------------------------------
 
 model Favorite {
   id         String   @id @default(cuid())
@@ -104,30 +177,17 @@ model Favorite {
   propertyId String
   createdAt  DateTime @default(now())
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   @@unique([userId, propertyId])
-}
-
-model Inquiry {
-  id         String        @id @default(cuid())
-  propertyId String
-  userId     String?
-  name       String
-  email      String
-  phone      String?
-  message    String        @db.Text
-  tourDate   DateTime?
-  status     InquiryStatus @default(PENDING)
-  createdAt  DateTime      @default(now())
-
-  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-
+  @@index([userId])
   @@index([propertyId])
-  @@index([status])
 }
+
+// ----------------------------------------------------
+// NEXTAUTH MODELS
+// ----------------------------------------------------
 
 model Account {
   id                String  @id @default(cuid())
@@ -146,6 +206,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -154,6 +215,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {

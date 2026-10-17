@@ -8,6 +8,7 @@ import { PropertyGallery } from "@/components/properties/property-gallery";
 import { AmenitiesCloud } from "@/components/properties/amenities-cloud";
 import { MortgageCalculator } from "@/components/properties/mortgage-calculator";
 import { TourInquiryForm } from "@/components/properties/tour-inquiry-form";
+import { VerifiedSellerCard } from "@/components/properties/verified-seller-card";
 import { PropertyCard } from "@/components/properties/property-card";
 import {
   MapPin,
@@ -24,6 +25,7 @@ import {
   Car,
   Home,
   CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
 
 interface PropertyDetailPageProps {
@@ -45,6 +47,7 @@ export async function generateMetadata({
       state: true,
       price: true,
       listingType: true,
+      listingStatus: true,
     },
   });
 
@@ -106,16 +109,21 @@ export default async function PropertyDetailPage({
 }: PropertyDetailPageProps) {
   const { slug } = await params;
 
-  // Query property with its agent
+  // Query property with its verified seller details
   const property = await prisma.property.findUnique({
     where: { slug },
     include: {
-      agent: {
+      seller: {
         select: {
+          id: true,
           name: true,
+          email: true,
           agencyName: true,
           image: true,
           phone: true,
+          whatsappNumber: true,
+          isVerified: true,
+          createdAt: true,
         },
       },
     },
@@ -125,31 +133,51 @@ export default async function PropertyDetailPage({
     notFound();
   }
 
-  // Parallel session and related properties query
-  const [session, relatedProperties] = await Promise.all([
-    auth(),
-    prisma.property.findMany({
-      where: {
-        id: { not: property.id },
-        OR: [
-          { city: property.city },
-          { propertyType: property.propertyType },
-          { listingType: property.listingType },
-        ],
-      },
-      take: 3,
-      orderBy: { createdAt: "desc" },
-      include: {
-        agent: {
-          select: {
-            name: true,
-            agencyName: true,
-            image: true,
-          },
+  const session = await auth();
+
+  // Access check: Only APPROVED properties are public.
+  // Unapproved/Draft/Rejected properties can only be previewed by the listing seller or an ADMIN.
+  const isOwnerOrAdmin =
+    Boolean(session?.user?.id &&
+    (session.user.id === property.sellerId || session.user.role === "ADMIN"));
+
+  if (property.listingStatus !== "APPROVED" && !isOwnerOrAdmin) {
+    notFound();
+  }
+
+  // Increment view counter asynchronously
+  try {
+    await prisma.property.update({
+      where: { id: property.id },
+      data: { viewsCount: { increment: 1 } },
+    });
+  } catch {
+    // Non-blocking view count update
+  }
+
+  // Related properties query: Only show approved properties
+  const relatedProperties = await prisma.property.findMany({
+    where: {
+      id: { not: property.id },
+      listingStatus: "APPROVED",
+      OR: [
+        { city: property.city },
+        { propertyType: property.propertyType },
+        { listingType: property.listingType },
+      ],
+    },
+    take: 3,
+    orderBy: { createdAt: "desc" },
+    include: {
+      seller: {
+        select: {
+          name: true,
+          agencyName: true,
+          image: true,
         },
       },
-    }),
-  ]);
+    },
+  });
 
   // Fetch favorites of current user if logged in
   let favoritedPropertyIds = new Set<string>();
@@ -181,12 +209,15 @@ export default async function PropertyDetailPage({
   const yearBuilt =
     property.propertyType === "PENTHOUSE" ? 2023 : 2021;
 
-  const propertyTypeLabel = {
+  const propertyTypeMap: Record<string, string> = {
     HOUSE: "Private Single-Family Estate",
     APARTMENT: "Luxury High-Rise Residence",
     VILLA: "Exclusive Oceanfront / Hillside Villa",
     PENTHOUSE: "Duplex Sky Penthouse",
-  }[property.propertyType] || property.propertyType;
+    COMMERCIAL: "Commercial Architecture",
+    PLOT: "Premium Land & Development Plot",
+  };
+  const propertyTypeLabel = propertyTypeMap[property.propertyType] || property.propertyType;
 
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 pt-28 md:pt-36 pb-24 px-4 sm:px-6 md:px-10 lg:px-16">
@@ -215,6 +246,16 @@ export default async function PropertyDetailPage({
           </Link>
         </div>
 
+        {/* Admin/Seller Preview Banner for Unapproved Properties */}
+        {property.listingStatus !== "APPROVED" && (
+          <div className="flex items-center gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold">
+            <AlertTriangle className="size-4 shrink-0 text-amber-600" />
+            <span>
+              <strong>Seller / Staff Preview Mode:</strong> This property is currently <strong>{property.listingStatus}</strong> and is hidden from public discovery until approved.
+            </span>
+          </div>
+        )}
+
         {/* High-Resolution Grid Collage & Lightbox */}
         <PropertyGallery title={property.title} images={property.images} />
 
@@ -231,7 +272,7 @@ export default async function PropertyDetailPage({
                 {property.listingType === "FOR_RENT" ? "For Rent" : "For Sale"}
               </span>
               <span className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs font-semibold uppercase tracking-wider">
-                {property.status}
+                {property.listingStatus}
               </span>
             </div>
 
@@ -303,7 +344,7 @@ export default async function PropertyDetailPage({
                     <Car className="size-4" /> Garage
                   </div>
                   <div className="font-heading text-xl font-bold text-zinc-950">
-                    {property.garage} Vehicles
+                    {property.garageSpaces} Vehicles
                   </div>
                 </div>
 
@@ -354,11 +395,18 @@ export default async function PropertyDetailPage({
           </div>
 
           {/* Right Sticky Sidebar (4 cols on desktop) */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
+            {/* Verified Seller / Agent Card */}
+            <VerifiedSellerCard
+              propertyTitle={property.title}
+              seller={property.seller}
+            />
+
+            {/* Schedule a Private Viewing Form */}
             <TourInquiryForm
               propertyId={property.id}
               propertyTitle={property.title}
-              agent={property.agent}
+              seller={property.seller}
               currentUser={session?.user}
             />
           </div>

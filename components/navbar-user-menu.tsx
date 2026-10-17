@@ -12,6 +12,7 @@ import {
   Heart,
   LogOut,
   ChevronDown,
+  ShieldCheck,
 } from "lucide-react";
 
 export function NavbarUserMenu() {
@@ -35,7 +36,7 @@ export function NavbarUserMenu() {
   }
 
   const { name, email, image, role } = session.user;
-  const isAgentOrAdmin = role === "AGENT" || role === "ADMIN";
+  const isAgentOrAdmin = role === "SELLER" || role === "AGENT" || role === "ADMIN";
 
   // Initials fallback
   const initials = name
@@ -113,6 +114,18 @@ export function NavbarUserMenu() {
 
             {/* Links */}
             <div className="py-1.5 space-y-0.5 text-xs font-medium">
+              {/* Admin Portal Link */}
+              {role === "ADMIN" && (
+                <Link
+                  href="/admin"
+                  onClick={() => setDropdownOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-amber-950 bg-amber-500/10 hover:bg-amber-500/20 transition-colors font-bold border border-amber-500/20"
+                >
+                  <ShieldCheck className="size-4 text-amber-600" />
+                  <span>Super Admin Gateway</span>
+                </Link>
+              )}
+
               {/* Dashboard Link for Agent and Admin only */}
               {isAgentOrAdmin && (
                 <Link

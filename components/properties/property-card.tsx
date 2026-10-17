@@ -24,13 +24,15 @@ export interface PropertyCardProps {
     slug: string;
     description: string;
     price: number;
-    propertyType: "HOUSE" | "APARTMENT" | "VILLA" | "PENTHOUSE";
-    listingType: "FOR_SALE" | "FOR_RENT";
-    status: "AVAILABLE" | "PENDING" | "SOLD";
+    propertyType: "HOUSE" | "APARTMENT" | "VILLA" | "PENTHOUSE" | "COMMERCIAL" | "PLOT" | string;
+    listingType: "FOR_SALE" | "FOR_RENT" | string;
+    status?: "AVAILABLE" | "PENDING" | "SOLD" | string;
+    listingStatus?: string;
     bedrooms: number;
     bathrooms: number;
     areaSqFt: number;
-    garage: number;
+    garage?: number;
+    garageSpaces?: number;
     address: string;
     city: string;
     state: string;
@@ -38,6 +40,11 @@ export interface PropertyCardProps {
     images: string[];
     amenities: string[];
     featured: boolean;
+    seller?: {
+      name: string | null;
+      agencyName: string | null;
+      image: string | null;
+    } | null;
     agent?: {
       name: string | null;
       agencyName: string | null;
@@ -268,9 +275,9 @@ export function PropertyCard({
         {/* Additional info footer */}
         <div className="mt-4 pt-3.5 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            {property.garage > 0 && (
+            {(property.garageSpaces ?? property.garage ?? 0) > 0 && (
               <span className="flex items-center gap-1 text-[11px] text-zinc-500">
-                <Car className="size-3" /> {property.garage} Garage
+                <Car className="size-3" /> {property.garageSpaces ?? property.garage} Garage
               </span>
             )}
           </div>

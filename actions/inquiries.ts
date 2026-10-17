@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { InquiryStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { notifySellerOfNewInquiry } from "@/lib/notifications";
 
 const InquirySchema = z.object({
   propertyId: z.string().min(1, "Property reference is required"),
@@ -13,6 +14,7 @@ const InquirySchema = z.object({
   phone: z.string().optional().or(z.literal("")),
   message: z.string().min(5, "Message must be at least 5 characters"),
   tourDate: z.string().optional().or(z.literal("")),
+  tourTime: z.string().optional().or(z.literal("")),
 });
 
 export type InquiryInput = z.infer<typeof InquirySchema>;
@@ -37,12 +39,27 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
       };
     }
 
-    const { propertyId, name, email, phone, message, tourDate } = parsed.data;
+    const { propertyId, name, email, phone, message, tourDate, tourTime } = parsed.data;
 
-    // Check if property exists
+    // Check if property exists and retrieve seller details for alert dispatch
     const propertyExists = await prisma.property.findUnique({
       where: { id: propertyId },
-      select: { id: true, title: true },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        city: true,
+        sellerId: true,
+        seller: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+            whatsappNumber: true,
+          },
+        },
+      },
     });
 
     if (!propertyExists) {
@@ -70,29 +87,57 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
       }
     }
 
-    // Create inquiry record
-    await prisma.inquiry.create({
+    // Create inquiry record in database
+    const newInquiry = await prisma.inquiry.create({
       data: {
         propertyId,
-        userId,
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: phone?.trim() || null,
+        sellerId: propertyExists.sellerId,
+        buyerId: userId,
+        buyerName: name.trim(),
+        buyerEmail: email.trim().toLowerCase(),
+        buyerPhone: phone?.trim() || null,
         message: message.trim(),
         tourDate: parsedDate,
-        status: InquiryStatus.PENDING,
+        tourTime: tourTime?.trim() || null,
+        status: InquiryStatus.NEW,
       },
     });
 
+    // Dispatch Email & SMS notification to the listing seller
+    try {
+      await notifySellerOfNewInquiry({
+        seller: propertyExists.seller,
+        property: {
+          id: propertyExists.id,
+          title: propertyExists.title,
+          slug: propertyExists.slug,
+          city: propertyExists.city,
+        },
+        lead: {
+          id: newInquiry.id,
+          buyerName: name.trim(),
+          buyerEmail: email.trim().toLowerCase(),
+          buyerPhone: phone?.trim() || null,
+          tourDate: parsedDate,
+          tourTime: tourTime?.trim() || null,
+          message: message.trim(),
+        },
+      });
+    } catch (notifyErr) {
+      console.error("Non-fatal: failed to send seller notification:", notifyErr);
+    }
+
     try {
       revalidatePath("/dashboard");
+      revalidatePath("/dashboard/seller");
+      revalidatePath("/dashboard/seller/leads");
     } catch {
       // Ignore outside request context
     }
 
     return {
       success: true,
-      message: `Your private tour request for ${propertyExists.title} has been received. Our luxury advisor will contact you promptly.`,
+      message: `Your private tour request for ${propertyExists.title} has been confirmed. The property advisor has been notified via email & SMS.`,
     };
   } catch (error: unknown) {
     console.error("Failed to submit property inquiry:", error);
@@ -141,10 +186,10 @@ export async function submitContactForm(data: ContactFormInput): Promise<{
     const property =
       (await prisma.property.findFirst({
         where: { featured: true },
-        select: { id: true, title: true },
+        select: { id: true, title: true, sellerId: true },
       })) ||
       (await prisma.property.findFirst({
-        select: { id: true, title: true },
+        select: { id: true, title: true, sellerId: true },
       }));
 
     if (!property) {
@@ -169,12 +214,13 @@ export async function submitContactForm(data: ContactFormInput): Promise<{
     await prisma.inquiry.create({
       data: {
         propertyId: property.id,
-        userId,
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: phone?.trim() || null,
+        sellerId: property.sellerId,
+        buyerId: userId,
+        buyerName: name.trim(),
+        buyerEmail: email.trim().toLowerCase(),
+        buyerPhone: phone?.trim() || null,
         message: fullMessage,
-        status: InquiryStatus.PENDING,
+        status: InquiryStatus.NEW,
       },
     });
 

@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
   try {
     const session = await auth();
 
-    if (!session?.user || (session.user.role !== "AGENT" && session.user.role !== "ADMIN")) {
-      return NextResponse.json({ error: "Unauthorized. Agent or Admin privileges required." }, { status: 401 });
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized. Please sign in to upload photos." }, { status: 401 });
     }
 
     const formData = await req.formData();
@@ -27,6 +27,21 @@ export async function POST(req: NextRequest) {
     // Convert file to buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+
+    const hasCloudinary =
+      !!(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME) &&
+      !!process.env.CLOUDINARY_API_KEY &&
+      !!process.env.CLOUDINARY_API_SECRET;
+
+    if (!hasCloudinary) {
+      const base64 = buffer.toString("base64");
+      const mimeType = file.type || "image/jpeg";
+      return NextResponse.json({
+        success: true,
+        url: `data:${mimeType};base64,${base64}`,
+        publicId: `local-${Date.now()}`,
+      });
+    }
 
     // Upload to Cloudinary via upload_stream
     const uploadResult = await new Promise<{ secure_url: string; public_id: string }>((resolve, reject) => {

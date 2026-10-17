@@ -7,7 +7,7 @@ import Link from "next/link";
 import { PropertyCard } from "@/components/properties/property-card";
 import { PropertyFilters } from "@/components/properties/property-filters";
 import { PropertyEmptyState } from "@/components/properties/property-empty-state";
-import { Sparkles, Building2, SlidersHorizontal, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Luxury Residences & Estates | PrebuiltUI Portfolio",
@@ -31,17 +31,23 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   const baths = typeof params.baths === "string" ? params.baths : undefined;
   const sort = typeof params.sort === "string" ? params.sort : "newest";
 
-  // Build Prisma Query
-  const where: Prisma.PropertyWhereInput = {};
+  // Build Prisma Query: Strictly only APPROVED listings are shown publicly
+  const where: Prisma.PropertyWhereInput = {
+    listingStatus: "APPROVED",
+  };
 
   if (search && search.trim() !== "") {
     const q = search.trim();
-    where.OR = [
-      { title: { contains: q, mode: "insensitive" } },
-      { city: { contains: q, mode: "insensitive" } },
-      { address: { contains: q, mode: "insensitive" } },
-      { state: { contains: q, mode: "insensitive" } },
-      { zipCode: { contains: q, mode: "insensitive" } },
+    where.AND = [
+      {
+        OR: [
+          { title: { contains: q, mode: "insensitive" } },
+          { city: { contains: q, mode: "insensitive" } },
+          { address: { contains: q, mode: "insensitive" } },
+          { state: { contains: q, mode: "insensitive" } },
+          { zipCode: { contains: q, mode: "insensitive" } },
+        ],
+      },
     ];
   }
 
@@ -86,7 +92,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
       where,
       orderBy,
       include: {
-        agent: {
+        seller: {
           select: {
             name: true,
             agencyName: true,
@@ -122,14 +128,6 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
         {/* Page Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-zinc-200">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black text-white text-xs font-medium tracking-wide">
-                <Sparkles className="size-3" /> Exclusive Portfolio
-              </span>
-              <span className="text-xs text-zinc-500 font-medium">
-                Verified Global Properties
-              </span>
-            </div>
             <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-950">
               Luxury Residences
             </h1>

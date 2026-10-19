@@ -20,7 +20,9 @@ export default auth((req) => {
 
   const isAuthRoute =
     nextUrl.pathname.startsWith("/login") ||
-    nextUrl.pathname.startsWith("/signup");
+    nextUrl.pathname.startsWith("/signup") ||
+    nextUrl.pathname.startsWith("/forgot-password") ||
+    nextUrl.pathname.startsWith("/reset-password");
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
 
@@ -49,9 +51,12 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/profile?notice=unauthorized_agent_access", nextUrl));
   }
 
-  // 2. If logged-in user visits /login or /signup, redirect to callbackUrl or appropriate destination
+  // 2. If logged-in user visits auth routes, redirect appropriately (unless resetting with a token)
   if (isAuthRoute) {
     if (isLoggedIn) {
+      if (nextUrl.pathname.startsWith("/reset-password") && nextUrl.searchParams.get("token")) {
+        return NextResponse.next();
+      }
       const callbackUrl = nextUrl.searchParams.get("callbackUrl");
       if (
         callbackUrl &&
@@ -138,5 +143,7 @@ export const config = {
     "/favorites/:path*",
     "/login",
     "/signup",
+    "/forgot-password",
+    "/reset-password",
   ],
 };

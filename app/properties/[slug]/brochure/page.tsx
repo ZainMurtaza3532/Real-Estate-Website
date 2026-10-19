@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { PrintTriggerButton } from "@/components/properties/print-trigger-button";
 import {
   Printer,
   ArrowLeft,
@@ -325,24 +326,5 @@ export default async function PropertyBrochurePage({ params }: BrochurePageProps
         </footer>
       </div>
     </div>
-  );
-}
-
-// Client Component for the Print button
-function PrintTriggerButton() {
-  "use client";
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        if (typeof window !== "undefined") {
-          window.print();
-        }
-      }}
-      className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800 shadow-sm transition cursor-pointer"
-    >
-      <Printer className="size-3.5" />
-      <span>Print / Save as PDF</span>
-    </button>
   );
 }

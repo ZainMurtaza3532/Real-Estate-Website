@@ -79,28 +79,22 @@ export function AdminSidebar({ pendingCount = 0, user }: AdminSidebarProps) {
     <aside className="w-64 bg-zinc-950 text-zinc-100 h-screen sticky top-0 flex flex-col shrink-0 border-r border-zinc-800 select-none z-30">
       {/* Brand Header */}
       <div className="p-6 border-b border-zinc-800/80">
-        <Link href="/admin" className="flex items-center gap-3 group">
-          <div className="relative size-8 rounded-xl bg-white flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
+        <Link href="/admin" className="flex items-center justify-between group">
+          <div className="flex items-center gap-2.5">
             <Image
               src="/logo.svg"
               alt="estate logo"
-              width={24}
-              height={24}
-              className="object-contain brightness-0"
+              width={100}
+              height={30}
+              className="h-7 w-auto object-contain select-none"
+              priority
             />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-heading font-extrabold text-base tracking-tight text-white">
-                estate
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                Admin
-              </span>
-            </div>
-            <p className="text-[11px] text-zinc-400 font-medium">Control Center</p>
+            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Admin
+            </span>
           </div>
         </Link>
+        <p className="text-[11px] text-zinc-400 font-medium mt-1 pl-0.5">Control Center</p>
       </div>
 
       {/* Navigation Menu */}

@@ -13,6 +13,8 @@ import {
 
 export interface VerifiedSellerCardProps {
   propertyTitle: string;
+  propertyPrice?: number;
+  propertySlug?: string;
   seller?: {
     id?: string;
     name?: string | null;
@@ -28,6 +30,8 @@ export interface VerifiedSellerCardProps {
 
 export function VerifiedSellerCard({
   propertyTitle,
+  propertyPrice,
+  propertySlug,
   seller,
 }: VerifiedSellerCardProps) {
   const sellerName = seller?.name || "PrebuiltUI Private Brokerage";
@@ -47,8 +51,17 @@ export function VerifiedSellerCard({
       })
     : "Jan 2024";
 
-  // Required exact WhatsApp template
-  const waMessage = `Hi, I am interested in your property: ${propertyTitle} listed on PrebuiltUI Estate.`;
+  // Pre-filled WhatsApp message including Property Name, Price, and Page URL
+  const formattedPrice = propertyPrice ? `$${propertyPrice.toLocaleString()}` : "";
+  const pageUrl =
+    typeof window !== "undefined" && window.location?.href
+      ? window.location.href
+      : `http://localhost:3000/properties/${propertySlug || ""}`;
+
+  const waMessage = `Hi, I am interested in your luxury residence: "${propertyTitle}"${
+    formattedPrice ? ` (Price: ${formattedPrice})` : ""
+  }.\nProperty Link: ${pageUrl}`;
+
   const waUrl = cleanWa
     ? `https://wa.me/${cleanWa}?text=${encodeURIComponent(waMessage)}`
     : `https://wa.me/?text=${encodeURIComponent(waMessage)}`;

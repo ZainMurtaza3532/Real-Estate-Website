@@ -5,7 +5,10 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { InquiryStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { notifySellerOfNewInquiry } from "@/lib/notifications";
+import {
+  notifySellerOfNewInquiry,
+  notifyBuyerOfTourConfirmation,
+} from "@/lib/notifications";
 
 const InquirySchema = z.object({
   propertyId: z.string().min(1, "Property reference is required"),
@@ -103,9 +106,9 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
       },
     });
 
-    // Dispatch Email & SMS notification to the listing seller
+    // Dispatch Email & SMS notification to the listing seller and confirmation to the buyer
     try {
-      await notifySellerOfNewInquiry({
+      const notificationPayload = {
         seller: propertyExists.seller,
         property: {
           id: propertyExists.id,
@@ -122,9 +125,14 @@ export async function submitPropertyInquiry(data: InquiryInput): Promise<{
           tourTime: tourTime?.trim() || null,
           message: message.trim(),
         },
-      });
+      };
+
+      await Promise.allSettled([
+        notifySellerOfNewInquiry(notificationPayload),
+        notifyBuyerOfTourConfirmation(notificationPayload),
+      ]);
     } catch (notifyErr) {
-      console.error("Non-fatal: failed to send seller notification:", notifyErr);
+      console.error("Non-fatal: failed to send lead notifications:", notifyErr);
     }
 
     try {

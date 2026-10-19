@@ -14,8 +14,10 @@ import {
   ChevronRight,
   Car,
   Sparkles,
+  Scale,
 } from "lucide-react";
 import { toggleFavorite } from "@/actions/favorites";
+import { useCompare } from "@/components/compare/compare-context";
 
 export interface PropertyCardProps {
   property: {
@@ -61,6 +63,8 @@ export function PropertyCard({
   isAuthenticated = false,
 }: PropertyCardProps) {
   const router = useRouter();
+  const { toggleCompare, isInCompare } = useCompare();
+  const inCompare = isInCompare(property.id);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorited, setIsFavorited] = useState(initialFavorited);
   const [isPending, startTransition] = useTransition();
@@ -206,23 +210,54 @@ export function PropertyCard({
           )}
         </div>
 
-        {/* Heart Favorite Button */}
-        <button
-          onClick={handleFavoriteClick}
-          disabled={isPending}
-          aria-label={isFavorited ? "Remove from favorites" : "Save to favorites"}
-          className={`absolute top-3 right-3 size-9 rounded-full flex items-center justify-center transition-all duration-200 shadow-md backdrop-blur-md cursor-pointer z-20 ${
-            isFavorited
-              ? "bg-white text-red-600 scale-105"
-              : "bg-white/80 hover:bg-white text-zinc-700 hover:text-zinc-950 hover:scale-105"
-          }`}
-        >
-          <Heart
-            className={`size-4.5 transition-transform ${
-              isFavorited ? "fill-red-600 stroke-red-600 scale-110" : ""
+        {/* Compare & Favorite Buttons */}
+        <div className="absolute top-3 right-3 flex items-center gap-1.5 z-20">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleCompare({
+                id: property.id,
+                title: property.title,
+                slug: property.slug,
+                price: property.price,
+                image: images[0],
+                city: property.city,
+                bedrooms: property.bedrooms,
+                bathrooms: property.bathrooms,
+                areaSqFt: property.areaSqFt,
+              });
+            }}
+            title={inCompare ? "Remove from comparison" : "Add to comparison"}
+            aria-label={inCompare ? "Remove from comparison" : "Add to comparison"}
+            className={`size-9 rounded-full flex items-center justify-center transition-all duration-200 shadow-md backdrop-blur-md cursor-pointer ${
+              inCompare
+                ? "bg-amber-400 text-zinc-950 scale-105 shadow-amber-500/20"
+                : "bg-white/80 hover:bg-white text-zinc-700 hover:text-zinc-950 hover:scale-105"
             }`}
-          />
-        </button>
+          >
+            <Scale className={`size-4 ${inCompare ? "stroke-[2.5]" : ""}`} />
+          </button>
+
+          <button
+            type="button"
+            onClick={handleFavoriteClick}
+            disabled={isPending}
+            aria-label={isFavorited ? "Remove from favorites" : "Save to favorites"}
+            className={`size-9 rounded-full flex items-center justify-center transition-all duration-200 shadow-md backdrop-blur-md cursor-pointer ${
+              isFavorited
+                ? "bg-white text-red-600 scale-105"
+                : "bg-white/80 hover:bg-white text-zinc-700 hover:text-zinc-950 hover:scale-105"
+            }`}
+          >
+            <Heart
+              className={`size-4.5 transition-transform ${
+                isFavorited ? "fill-red-600 stroke-red-600 scale-110" : ""
+              }`}
+            />
+          </button>
+        </div>
 
         {/* Bottom Property Type Pill */}
         <div className="absolute bottom-3 left-3 z-10 pointer-events-none">

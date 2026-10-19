@@ -7,6 +7,7 @@ import Link from "next/link";
 import { PropertyCard } from "@/components/properties/property-card";
 import { PropertyFilters } from "@/components/properties/property-filters";
 import { PropertyEmptyState } from "@/components/properties/property-empty-state";
+import { PropertiesViewContainer } from "@/components/properties/properties-view-container";
 import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -144,31 +145,17 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           </div>
         </div>
 
-        {/* Content Section: Filter Sidebar + Properties Grid */}
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          {/* Filter Sidebar (Suspended for searchParams reactivity) */}
-          <Suspense fallback={<div className="w-72 h-96 bg-zinc-100 rounded-2xl animate-pulse" />}>
-            <PropertyFilters />
-          </Suspense>
-
-          {/* Properties Grid Area */}
-          <div className="flex-1 w-full min-w-0">
-            {properties.length === 0 ? (
-              <PropertyEmptyState />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                {properties.map((property) => (
-                  <PropertyCard
-                    key={property.id}
-                    property={property}
-                    initialFavorited={favoritedPropertyIds.has(property.id)}
-                    isAuthenticated={!!session?.user}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
+        {/* View Container: Supports Grid View, Split Map View, and Full Interactive Map */}
+        <PropertiesViewContainer
+          properties={properties}
+          favoritedPropertyIds={Array.from(favoritedPropertyIds)}
+          isAuthenticated={!!session?.user}
+          filterSidebar={
+            <Suspense fallback={<div className="w-72 h-96 bg-zinc-100 rounded-2xl animate-pulse" />}>
+              <PropertyFilters />
+            </Suspense>
+          }
+        />
       </div>
     </div>
   );

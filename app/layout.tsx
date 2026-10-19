@@ -23,6 +23,8 @@ export const metadata: Metadata = {
   description: "Helping families find their dream homes. Discover exceptional properties, expert advice, and a seamless buying or selling experience tailored to your goals.",
 };
 
+import { CompareProvider } from "@/components/compare/compare-context";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,8 +37,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <SessionProvider>
-          {children}
-          <Toaster position="top-right" richColors />
+          <CompareProvider>
+            {children}
+            <Toaster position="top-right" richColors />
+          </CompareProvider>
         </SessionProvider>
       </body>
     </html>

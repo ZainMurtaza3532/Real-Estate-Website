@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Sparkles,
   ExternalLink,
+  TrendingUp,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -49,6 +50,14 @@ export function AdminSidebar({ pendingCount = 0, user }: AdminSidebarProps) {
       icon: Building2,
       active: pathname === "/admin/properties",
       badge: null,
+    },
+    {
+      title: "Analytics & Activity",
+      href: "/admin/analytics",
+      icon: TrendingUp,
+      active: pathname.startsWith("/admin/analytics"),
+      badge: "PRO",
+      badgeColor: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
     },
     {
       title: "Users & Sellers",

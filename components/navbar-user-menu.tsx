@@ -13,6 +13,7 @@ import {
   LogOut,
   ChevronDown,
   ShieldCheck,
+  Scale,
 } from "lucide-react";
 
 export function NavbarUserMenu() {
@@ -154,6 +155,15 @@ export function NavbarUserMenu() {
               >
                 <Heart className="size-4 text-zinc-500" />
                 <span>Saved Listings</span>
+              </Link>
+
+              <Link
+                href="/compare"
+                onClick={() => setDropdownOpen(false)}
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
+              >
+                <Scale className="size-4 text-zinc-500" />
+                <span>Compare Tool</span>
               </Link>
             </div>
 

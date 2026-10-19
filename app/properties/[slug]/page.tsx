@@ -26,6 +26,7 @@ import {
   Home,
   CheckCircle,
   AlertTriangle,
+  Printer,
 } from "lucide-react";
 
 interface PropertyDetailPageProps {
@@ -238,12 +239,23 @@ export default async function PropertyDetailPage({
             </span>
           </div>
 
-          <Link
-            href="/properties"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-800 hover:text-black transition"
-          >
-            <ArrowLeft className="size-3.5" /> Back to Portfolio
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/properties/${property.slug}/brochure`}
+              target="_blank"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-zinc-200 text-xs font-semibold text-zinc-800 hover:text-black hover:border-zinc-400 transition shadow-2xs"
+            >
+              <Printer className="size-3.5 text-zinc-500" />
+              <span>Download Brochure</span>
+            </Link>
+
+            <Link
+              href="/properties"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-800 hover:text-black transition"
+            >
+              <ArrowLeft className="size-3.5" /> Back to Portfolio
+            </Link>
+          </div>
         </div>
 
         {/* Admin/Seller Preview Banner for Unapproved Properties */}
@@ -396,9 +408,11 @@ export default async function PropertyDetailPage({
 
           {/* Right Sticky Sidebar (4 cols on desktop) */}
           <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
-            {/* Verified Seller / Agent Card */}
+            {/* Verified Seller / Agent Card with Direct WhatsApp */}
             <VerifiedSellerCard
               propertyTitle={property.title}
+              propertyPrice={property.price}
+              propertySlug={property.slug}
               seller={property.seller}
             />
 

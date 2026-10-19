@@ -27,6 +27,8 @@ import {
   CheckCircle,
   AlertTriangle,
   Printer,
+  Download,
+  ArrowRight,
 } from "lucide-react";
 
 interface PropertyDetailPageProps {
@@ -239,19 +241,19 @@ export default async function PropertyDetailPage({
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <Link
               href={`/properties/${property.slug}/brochure`}
               target="_blank"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-zinc-200 text-xs font-semibold text-zinc-800 hover:text-black hover:border-zinc-400 transition shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-zinc-950 text-white hover:bg-zinc-800 text-xs font-bold transition shadow-xs cursor-pointer"
             >
-              <Printer className="size-3.5 text-zinc-500" />
+              <Download className="size-3.5 text-amber-400" />
               <span>Download Brochure</span>
             </Link>
 
             <Link
               href="/properties"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-800 hover:text-black transition"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-700 hover:text-black transition px-3 py-2"
             >
               <ArrowLeft className="size-3.5" /> Back to Portfolio
             </Link>
@@ -415,6 +417,24 @@ export default async function PropertyDetailPage({
               propertySlug={property.slug}
               seller={property.seller}
             />
+
+            {/* Quick PDF Brochure Download Card */}
+            <Link
+              href={`/properties/${property.slug}/brochure`}
+              target="_blank"
+              className="flex items-center justify-between p-4 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-300 shadow-xs hover:shadow-md transition-all group select-none cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className="size-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-700 group-hover:scale-105 transition-transform">
+                  <Download className="size-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-zinc-950">Official Property Brochure</p>
+                  <p className="text-[11px] text-zinc-500">View & print high-res PDF dossier</p>
+                </div>
+              </div>
+              <ArrowRight className="size-4 text-zinc-400 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+            </Link>
 
             {/* Schedule a Private Viewing Form */}
             <TourInquiryForm

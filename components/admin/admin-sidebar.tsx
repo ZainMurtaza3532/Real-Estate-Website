@@ -76,7 +76,7 @@ export function AdminSidebar({ pendingCount = 0, user }: AdminSidebarProps) {
   ];
 
   return (
-    <aside className="w-64 bg-zinc-950 text-zinc-100 min-h-screen flex flex-col shrink-0 border-r border-zinc-800 select-none">
+    <aside className="w-64 bg-zinc-950 text-zinc-100 h-screen sticky top-0 flex flex-col shrink-0 border-r border-zinc-800 select-none z-30">
       {/* Brand Header */}
       <div className="p-6 border-b border-zinc-800/80">
         <Link href="/admin" className="flex items-center gap-3 group">
@@ -86,7 +86,7 @@ export function AdminSidebar({ pendingCount = 0, user }: AdminSidebarProps) {
               alt="estate logo"
               width={24}
               height={24}
-              className="object-contain"
+              className="object-contain brightness-0"
             />
           </div>
           <div>

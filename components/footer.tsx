@@ -1,8 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Hide global footer on printable brochure pages
+  if (pathname?.includes("/brochure")) {
+    return null;
+  }
+
   return (
     <footer className="bg-black text-white pt-16 pb-8 mt-0 px-4 md:px-16 lg:px-24 xl:px-32 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">

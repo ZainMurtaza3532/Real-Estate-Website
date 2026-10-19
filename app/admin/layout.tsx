@@ -52,15 +52,15 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col md:flex-row antialiased">
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block">
+      {/* Desktop Sticky Sidebar */}
+      <div className="hidden md:block shrink-0 sticky top-0 h-screen z-30">
         <AdminSidebar pendingCount={pendingCount} user={session.user} />
       </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         <AdminTopbar user={session.user} pendingCount={pendingCount} />
-        <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-10 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 md:p-8 lg:p-10">
           {children}
         </main>
       </div>

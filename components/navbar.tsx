@@ -39,6 +39,11 @@ export function Navbar() {
     session?.user?.role === "AGENT" ||
     session?.user?.role === "ADMIN";
 
+  // Hide global consumer navbar on printable brochure pages
+  if (pathname?.includes("/brochure")) {
+    return null;
+  }
+
   return (
     <>
       <nav

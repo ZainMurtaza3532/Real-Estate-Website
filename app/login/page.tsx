@@ -49,7 +49,24 @@ function LoginForm() {
         setErrorMessage("Invalid credentials. Please verify your email and password.");
         setLoading(false);
       } else {
-        router.push(callbackUrl);
+        if (!callbackUrl || callbackUrl === "/") {
+          try {
+            const sessionRes = await fetch("/api/auth/session");
+            const sessionData = await sessionRes.json();
+            const userRole = sessionData?.user?.role;
+            if (userRole === "ADMIN") {
+              router.push("/admin");
+            } else if (userRole === "SELLER" || userRole === "AGENT") {
+              router.push("/dashboard");
+            } else {
+              router.push("/properties");
+            }
+          } catch {
+            router.push("/properties");
+          }
+        } else {
+          router.push(callbackUrl);
+        }
         router.refresh();
       }
     } catch (err) {

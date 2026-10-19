@@ -51,7 +51,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
     ];
   }
 
-  if (type && ["HOUSE", "APARTMENT", "VILLA", "PENTHOUSE"].includes(type)) {
+  if (type && ["HOUSE", "APARTMENT", "VILLA", "PENTHOUSE", "COMMERCIAL", "PLOT"].includes(type)) {
     where.propertyType = type as PropertyType;
   }
 

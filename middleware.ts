@@ -12,6 +12,12 @@ export default auth((req) => {
     (req.auth as { role?: string })?.role ||
     (req.auth as { token?: { role?: string } })?.token?.role;
 
+  const userEmail = req.auth?.user?.email?.toLowerCase().trim();
+
+  // Read strictly single admin email from environment
+  const configuredAdminEmail = (process.env.ADMIN_EMAIL || "").toLowerCase().trim();
+  const isDesignatedAdmin = !!configuredAdminEmail && !!userEmail && userEmail === configuredAdminEmail;
+
   const isAuthRoute =
     nextUrl.pathname.startsWith("/login") ||
     nextUrl.pathname.startsWith("/signup");
@@ -43,7 +49,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/profile?notice=unauthorized_agent_access", nextUrl));
   }
 
-  // 1. If logged-in user visits /login or /signup, redirect to callbackUrl or appropriate destination
+  // 2. If logged-in user visits /login or /signup, redirect to callbackUrl or appropriate destination
   if (isAuthRoute) {
     if (isLoggedIn) {
       const callbackUrl = nextUrl.searchParams.get("callbackUrl");
@@ -55,36 +61,42 @@ export default auth((req) => {
       ) {
         return NextResponse.redirect(new URL(callbackUrl, nextUrl));
       }
-      if (userRole === "ADMIN") {
+      if (userRole === "ADMIN" && isDesignatedAdmin) {
         return NextResponse.redirect(new URL("/admin", nextUrl));
       }
       if (userRole === "SELLER" || userRole === "AGENT") {
         return NextResponse.redirect(new URL("/dashboard", nextUrl));
       }
-      return NextResponse.redirect(new URL("/profile", nextUrl));
+      return NextResponse.redirect(new URL("/properties", nextUrl));
     }
     return NextResponse.next();
   }
 
-  // 2. Super Admin Dashboard: STRICTLY ADMIN only
+  // 3. Super Admin Dashboard: STRICTLY role === 'ADMIN' AND email matches the single ADMIN_EMAIL
   if (isAdminRoute) {
     if (!isLoggedIn) {
       const callbackUrl = encodeURIComponent(nextUrl.pathname);
       return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, nextUrl));
     }
 
-    if (userRole !== "ADMIN") {
+    if (userRole !== "ADMIN" || !isDesignatedAdmin) {
       return NextResponse.redirect(new URL("/unauthorized", nextUrl));
     }
 
     return NextResponse.next();
   }
 
-  // 3. Protect /dashboard and /dashboard/* (SELLER, AGENT, and ADMIN)
+  // 4. Protect /dashboard and /dashboard/*: strictly AGENT, SELLER, or ADMIN (Block BUYER)
   if (isAgentOrAdminRoute) {
     if (!isLoggedIn) {
       const callbackUrl = encodeURIComponent(nextUrl.pathname);
       return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, nextUrl));
+    }
+
+    // Strictly block BUYER and any non-agent/non-admin user from /dashboard
+    const isAgentOrAdmin = userRole === "AGENT" || userRole === "SELLER" || userRole === "ADMIN";
+    if (!isAgentOrAdmin) {
+      return NextResponse.redirect(new URL("/profile?notice=unauthorized_agent_access", nextUrl));
     }
 
     // Consolidate legacy /dashboard/seller routes into unified agent dashboard
@@ -101,14 +113,6 @@ export default auth((req) => {
       return NextResponse.redirect(new URL("/dashboard", nextUrl));
     }
 
-    // Allow authenticated users to access listing creation wizard
-    if (nextUrl.pathname === "/dashboard/properties/new") {
-      return NextResponse.next();
-    }
-
-    // For other dashboard routes, if token role is already SELLER/AGENT/ADMIN, proceed.
-    // Otherwise, allow the server components (which have direct DB access) to verify up-to-date role
-    // rather than prematurely bouncing users with stale JWT cookies to /profile.
     return NextResponse.next();
   }
 

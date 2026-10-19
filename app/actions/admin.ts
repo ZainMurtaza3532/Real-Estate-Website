@@ -7,7 +7,15 @@ import { ListingStatus } from "@prisma/client";
 
 async function verifyAdmin() {
   const session = await auth();
-  if (!session?.user || session.user.role !== "ADMIN") {
+  const configuredAdminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  const sessionEmail = session?.user?.email?.trim().toLowerCase();
+
+  if (
+    !session?.user ||
+    session.user.role !== "ADMIN" ||
+    !configuredAdminEmail ||
+    sessionEmail !== configuredAdminEmail
+  ) {
     throw new Error("Unauthorized. Super Admin credentials required.");
   }
   return session.user;

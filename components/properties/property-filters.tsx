@@ -20,6 +20,8 @@ const PROPERTY_TYPES = [
   { label: "Apartment", value: "APARTMENT" },
   { label: "Villa", value: "VILLA" },
   { label: "Penthouse", value: "PENTHOUSE" },
+  { label: "Commercial", value: "COMMERCIAL" },
+  { label: "Land Plot", value: "PLOT" },
 ];
 
 const LISTING_TYPES = [

@@ -131,7 +131,7 @@ export async function submitSellerProperty(data: SellPropertyInput): Promise<{
         currency: validData.currency || "USD",
         propertyType: validData.propertyType as PropertyType,
         listingType: validData.listingType as ListingType,
-        listingStatus: ListingStatus.APPROVED,
+        listingStatus: ListingStatus.PENDING_APPROVAL,
         bedrooms: validData.bedrooms,
         bathrooms: validData.bathrooms,
         areaSqFt: validData.areaSqFt,
@@ -167,7 +167,7 @@ export async function submitSellerProperty(data: SellPropertyInput): Promise<{
       slug: property.slug,
       propertyId: property.id,
       message:
-        "Your property listing has been successfully published and is now live on the properties page!",
+        "Your property listing has been successfully submitted and is under executive review. Once approved, it will be published to the luxury portfolio.",
     };
   } catch (error: unknown) {
     console.error("Failed to submit property listing:", error);

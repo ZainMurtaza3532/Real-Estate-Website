@@ -91,7 +91,21 @@ function SignupForm() {
   const handleGoogleSignUp = async () => {
     setGoogleLoading(true);
     try {
-      await signIn("google", { callbackUrl });
+      // 1. Set short-lived document cookie for selected_role
+      const isHttps = typeof window !== "undefined" && window.location.protocol === "https:";
+      document.cookie = `selected_role=${role}; path=/; max-age=300; SameSite=Lax${isHttps ? "; Secure" : ""}`;
+
+      // 2. Direct user to appropriate destination post-login:
+      // If user selected AGENT -> /dashboard
+      // If user selected BUYER -> /properties (or specific callbackUrl if passed in query)
+      const callbackTarget =
+        callbackUrl && callbackUrl !== "/"
+          ? callbackUrl
+          : role === "AGENT"
+          ? "/dashboard"
+          : "/properties";
+
+      await signIn("google", { callbackUrl: callbackTarget });
     } catch (err) {
       console.error("Google sign up error:", err);
       setGoogleLoading(false);

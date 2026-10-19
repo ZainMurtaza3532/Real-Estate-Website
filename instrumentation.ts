@@ -12,5 +12,12 @@ export async function register() {
     } catch (e) {
       console.warn("Could not set IPv4 global dispatcher:", e);
     }
+
+    try {
+      const { seedAdminUser } = await import("@/lib/admin-seed");
+      await seedAdminUser();
+    } catch (e) {
+      console.warn("Could not auto-seed admin on startup:", e);
+    }
   }
 }

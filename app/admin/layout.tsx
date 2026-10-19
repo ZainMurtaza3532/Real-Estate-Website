@@ -22,6 +22,14 @@ export default async function AdminLayout({
     redirect("/login?callbackUrl=/admin");
   }
 
+  const configuredAdminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  const sessionEmail = session.user.email?.trim().toLowerCase();
+
+  // If email does not match the single configured ADMIN_EMAIL, strictly deny
+  if (!configuredAdminEmail || !sessionEmail || sessionEmail !== configuredAdminEmail) {
+    redirect("/unauthorized");
+  }
+
   let role = session.user.role;
   if (role !== "ADMIN") {
     const dbUser = await prisma.user.findUnique({

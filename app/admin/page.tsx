@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Super Admin Command Center - PrebuiltUI Estate",
+  title: "Super Admin Command Center - HavenStone Estates",
   description: "Executive platform analytics, inventory metrics, moderation queue, and user governance.",
 };
 

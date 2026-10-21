@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Client Profile - PrebuiltUI Estate",
+  title: "Client Profile - HavenStone Estates",
   description: "View and manage your private real estate membership profile.",
 };
 

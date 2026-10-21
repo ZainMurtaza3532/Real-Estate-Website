@@ -10,6 +10,7 @@ import { MortgageCalculator } from "@/components/properties/mortgage-calculator"
 import { TourInquiryForm } from "@/components/properties/tour-inquiry-form";
 import { VerifiedSellerCard } from "@/components/properties/verified-seller-card";
 import { PropertyCard } from "@/components/properties/property-card";
+import { JsonLd, getPropertyJsonLd } from "@/components/seo/JsonLd";
 import {
   MapPin,
   Bed,
@@ -40,6 +41,9 @@ export async function generateMetadata({
   params,
 }: PropertyDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://havenstone.com";
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "HavenStone Estates";
+
   const property = await prisma.property.findUnique({
     where: { slug },
     select: {
@@ -49,26 +53,31 @@ export async function generateMetadata({
       city: true,
       state: true,
       price: true,
+      currency: true,
       listingType: true,
       listingStatus: true,
+      propertyType: true,
     },
   });
 
   if (!property) {
     return {
-      title: "Property Not Found | PrebuiltUI Luxury Estate",
+      title: "Property Not Found | HavenStone Estates",
       description: "The requested luxury property could not be found.",
+      robots: { index: false, follow: false },
     };
   }
 
   const primaryImage =
     property.images && property.images.length > 0
-      ? property.images[0]
-      : "/assets/house.png";
+      ? property.images[0].startsWith("http")
+        ? property.images[0]
+        : `${siteUrl}${property.images[0].startsWith("/") ? "" : "/"}${property.images[0]}`
+      : `${siteUrl}/assets/house.png`;
 
   const formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: property.currency || "USD",
     maximumFractionDigits: 0,
   }).format(property.price);
 
@@ -77,32 +86,45 @@ export async function generateMetadata({
       ? `${formattedPrice} / month`
       : formattedPrice;
 
+  // Auto-trimmed property description (first 155-160 characters)
+  const trimmedDescription = property.description
+    ? property.description.replace(/\s+/g, " ").trim().slice(0, 160)
+    : `${property.title} in ${property.city}, ${property.state}. Offered at ${priceSubtitle}.`;
+
   return {
-    title: `${property.title} | ${property.city}, ${property.state} | PrebuiltUI`,
-    description: `${property.title} offered at ${priceSubtitle}. ${property.description.slice(
-      0,
-      150
-    )}...`,
+    title: `${property.title} | ${property.city}, ${property.state} | HavenStone`,
+    description: trimmedDescription,
+    alternates: {
+      canonical: `/properties/${slug}`,
+    },
     openGraph: {
-      title: `${property.title} - ${priceSubtitle}`,
-      description: property.description.slice(0, 160),
-      url: `/properties/${slug}`,
-      siteName: "PrebuiltUI Private Real Estate",
+      title: `${property.title} - ${priceSubtitle} | HavenStone`,
+      description: trimmedDescription,
+      url: `${siteUrl}/properties/${slug}`,
+      siteName: siteName,
+      locale: "en_US",
+      type: "website",
       images: [
         {
           url: primaryImage,
           width: 1200,
           height: 630,
-          alt: property.title,
+          alt: `${property.title} - ${property.propertyType} in ${property.city}, ${property.state}`,
         },
       ],
-      type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: property.title,
-      description: property.description.slice(0, 150),
+      title: `${property.title} | ${property.city}, ${property.state}`,
+      description: trimmedDescription,
       images: [primaryImage],
+      creator: "@HavenStoneEstates",
+    },
+    other: {
+      "price:amount": property.price.toString(),
+      "price:currency": property.currency || "USD",
+      "og:price:amount": property.price.toString(),
+      "og:price:currency": property.currency || "USD",
     },
   };
 }
@@ -222,8 +244,12 @@ export default async function PropertyDetailPage({
   };
   const propertyTypeLabel = propertyTypeMap[property.propertyType] || property.propertyType;
 
+  // Generate structured data schema for search engines
+  const propertyJsonLd = getPropertyJsonLd(property);
+
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 pt-28 md:pt-36 pb-24 px-4 sm:px-6 md:px-10 lg:px-16">
+      <JsonLd data={propertyJsonLd} />
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Navigation Breadcrumbs */}
         <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-500 pb-2">

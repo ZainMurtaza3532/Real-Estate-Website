@@ -1,5 +1,5 @@
 /**
- * PrebuiltUI Estate Notification Service
+ * HavenStone Estates Notification Service
  * Dispatches production-ready email and SMS notifications
  * to sellers when a buyer requests a private viewing, and sends
  * an automated confirmation email to the prospective buyer.
@@ -37,7 +37,7 @@ export async function notifySellerOfNewInquiry(payload: SellerNotificationPayloa
   smsSent: boolean;
 }> {
   const { seller, property, lead } = payload;
-  const sellerEmail = seller.email || "seller@prebuiltui.com";
+  const sellerEmail = seller.email || "advisors@havenstone.com";
   const sellerPhone = seller.phone || seller.whatsappNumber || null;
   const sellerName = seller.name || "Luxury Property Advisor";
 
@@ -56,7 +56,7 @@ export async function notifySellerOfNewInquiry(payload: SellerNotificationPayloa
   const emailSubject = `[Lead Alert] New Private Tour Request: "${property.title}"`;
   const emailBody = `
 ============================================================
-PREBUILTUI LUXURY REAL ESTATE - NEW LEAD NOTIFICATION
+HAVENSTONE ESTATES - NEW LEAD NOTIFICATION
 ============================================================
 
 Hello ${sellerName},
@@ -85,7 +85,7 @@ QUICK ACTIONS:
 `;
 
   // 2. Format SMS Body for Seller
-  const smsBody = `[PrebuiltUI Alert] New tour request for "${property.title}" from ${lead.buyerName} (${lead.buyerPhone || lead.buyerEmail}). Scheduled: ${formattedTourDate}${tourTimeStr}. View: http://localhost:3000/dashboard/inquiries`;
+  const smsBody = `[HavenStone Alert] New tour request for "${property.title}" from ${lead.buyerName} (${lead.buyerPhone || lead.buyerEmail}). Scheduled: ${formattedTourDate}${tourTimeStr}. View: http://localhost:3000/dashboard/inquiries`;
 
   // Log / Dispatch
   console.log(`\n------------------------------------------------------------`);
@@ -112,7 +112,7 @@ export async function notifyBuyerOfTourConfirmation(payload: SellerNotificationP
   confirmationSent: boolean;
 }> {
   const { seller, property, lead } = payload;
-  const sellerName = seller.name || "PrebuiltUI Private Brokerage Advisor";
+  const sellerName = seller.name || "HavenStone Private Brokerage Advisor";
   const agency = seller.agencyName || "Luxury Estate Advisors";
 
   const formattedTourDate = lead.tourDate
@@ -129,7 +129,7 @@ export async function notifyBuyerOfTourConfirmation(payload: SellerNotificationP
   const buyerSubject = `[Viewing Confirmed] Your Private Showing for "${property.title}"`;
   const buyerEmailBody = `
 ============================================================
-PREBUILTUI LUXURY REAL ESTATE - TOUR CONFIRMATION
+HAVENSTONE ESTATES - TOUR CONFIRMATION
 ============================================================
 
 Dear ${lead.buyerName},
@@ -155,7 +155,7 @@ WHAT HAPPENS NEXT:
 View Property Details: http://localhost:3000/properties/${property.slug}
 
 Warm regards,
-PrebuiltUI Private Client Concierge
+HavenStone Private Client Concierge
 ============================================================
 `;
 

@@ -57,7 +57,7 @@ export function Gallery() {
                 {/* Horizontal scroll track */}
                 <div ref={trackRef} className="flex gap-5 px-4 md:px-16 lg:px-24 xl:px-32 py-16 md:py-20 will-change-transform transition-transform duration-300 ease-out">
                     {images.map((src, index) => (
-                        <Image key={index} src={src} alt={`Gallery Image ${index + 1}`} width={364} height={457} className="object-cover shrink-0 pointer-events-none" />
+                        <Image key={index} src={src} alt={`HavenStone Luxury Residence Architectural Feature - Gallery Showcase ${index + 1}`} width={364} height={457} className="object-cover shrink-0 pointer-events-none" />
                     ))}
                 </div>
 

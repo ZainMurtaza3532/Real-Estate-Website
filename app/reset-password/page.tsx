@@ -121,7 +121,7 @@ function ResetPasswordForm() {
         <Link href="/" className="inline-block mb-1">
           <Image
             src="/logo.svg"
-            alt="estate"
+            alt="HavenStone Estates"
             width={100}
             height={32}
             style={{ width: "auto", height: "auto" }}
@@ -228,7 +228,7 @@ export default function ResetPasswordPage() {
         <div className="relative z-10 flex items-center gap-3">
           <Image
             src="/logo.svg"
-            alt="estate"
+            alt="HavenStone Estates"
             width={100}
             height={36}
             className="brightness-200 h-8 w-auto"

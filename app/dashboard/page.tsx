@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Agent Command Center & Sales Overview - PrebuiltUI",
+  title: "Agent Command Center & Sales Overview - HavenStone Estates",
   description: "Executive sales analytics, exclusive listing inventory, and buyer tour inquiries.",
 };
 

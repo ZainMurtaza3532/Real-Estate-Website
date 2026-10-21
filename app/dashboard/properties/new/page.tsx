@@ -9,7 +9,7 @@ import { ArrowLeft, PlusCircle } from "lucide-react";
 
 export const metadata = {
   title: "Create Luxury Listing - Agent Dashboard",
-  description: "Publish a verified architectural residence to the global PrebuiltUI portfolio.",
+  description: "Publish a verified architectural residence to the global HavenStone Estates portfolio.",
 };
 
 export default async function NewPropertyPage() {

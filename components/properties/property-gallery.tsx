@@ -63,7 +63,7 @@ export function PropertyGallery({ title, images }: PropertyGalleryProps) {
           >
             <Image
               src={displayImages[0]}
-              alt={`${title} - Primary View`}
+              alt={`${title} - Primary Architectural Façade & Exterior Showcase`}
               fill
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -84,7 +84,7 @@ export function PropertyGallery({ title, images }: PropertyGalleryProps) {
           >
             <Image
               src={displayImages[1 % displayImages.length]}
-              alt={`${title} - Gallery Photo 2`}
+              alt={`${title} - Interior Architecture & Living Space View`}
               fill
               sizes="25vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -99,7 +99,7 @@ export function PropertyGallery({ title, images }: PropertyGalleryProps) {
           >
             <Image
               src={displayImages[2 % displayImages.length]}
-              alt={`${title} - Gallery Photo 3`}
+              alt={`${title} - Gourmet Kitchen & Dining Space`}
               fill
               sizes="25vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -114,7 +114,7 @@ export function PropertyGallery({ title, images }: PropertyGalleryProps) {
           >
             <Image
               src={displayImages[3 % displayImages.length]}
-              alt={`${title} - Gallery Photo 4`}
+              alt={`${title} - Master Bedroom Suite & Luxury Finishes`}
               fill
               sizes="25vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -129,7 +129,7 @@ export function PropertyGallery({ title, images }: PropertyGalleryProps) {
           >
             <Image
               src={displayImages[4 % displayImages.length]}
-              alt={`${title} - Gallery Photo 5`}
+              alt={`${title} - Grounds, Terrace & Panoramic Vista`}
               fill
               sizes="25vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

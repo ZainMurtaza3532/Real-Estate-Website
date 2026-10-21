@@ -6,7 +6,7 @@ import { CompareMatrix, FullCompareProperty } from "@/components/compare/compare
 import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Property Comparison Matrix | PrebuiltUI Luxury Real Estate",
+  title: "Property Comparison Matrix | HavenStone Estates",
   description:
     "Compare up to 4 premier estates side-by-side: pricing, architectural square footage, bedroom suites, and luxury amenities.",
 };

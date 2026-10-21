@@ -32,7 +32,7 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       name: "Alexander Wright",
-      email: "admin@prebuiltui.com",
+      email: "admin@havenstone.com",
       password: adminPasswordHash,
       role: Role.ADMIN,
       isVerified: true,
@@ -47,13 +47,13 @@ async function main() {
   const sellerSarah = await prisma.user.create({
     data: {
       name: "Sarah Jenkins",
-      email: "seller.sarah@prebuiltui.com",
+      email: "seller.sarah@havenstone.com",
       password: sellerPasswordHash,
       role: Role.SELLER,
       isVerified: true,
       phone: "+1 (555) 234-5678",
       whatsappNumber: "+15552345678",
-      agencyName: "PrebuiltUI Prime Estates",
+      agencyName: "HavenStone Prime Estates",
       image:
         "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
     },
@@ -63,7 +63,7 @@ async function main() {
   const sellerMarcus = await prisma.user.create({
     data: {
       name: "Marcus Vance",
-      email: "seller.marcus@prebuiltui.com",
+      email: "seller.marcus@havenstone.com",
       password: sellerPasswordHash,
       role: Role.SELLER,
       isVerified: true,
@@ -79,7 +79,7 @@ async function main() {
   const buyer = await prisma.user.create({
     data: {
       name: "Eleanor Sterling",
-      email: "buyer@prebuiltui.com",
+      email: "buyer@havenstone.com",
       password: buyerPasswordHash,
       role: Role.BUYER,
       isVerified: true,
@@ -361,7 +361,7 @@ async function main() {
       sellerId: sellerSarah.id,
       buyerId: buyer.id,
       buyerName: "Eleanor Sterling",
-      buyerEmail: "buyer@prebuiltui.com",
+      buyerEmail: "buyer@havenstone.com",
       buyerPhone: "+1 (555) 432-1098",
       message:
         "I am looking to schedule a private walkthrough of The Glass Horizon Villa for next Tuesday. Is proof of funds or an NDA required prior to arrival?",
@@ -377,7 +377,7 @@ async function main() {
       sellerId: sellerMarcus.id,
       buyerId: buyer.id,
       buyerName: "Eleanor Sterling",
-      buyerEmail: "buyer@prebuiltui.com",
+      buyerEmail: "buyer@havenstone.com",
       buyerPhone: "+1 (555) 432-1098",
       message:
         "Please provide the condominium board prospectus and private elevator maintenance schedule for the Central Park South penthouse.",
@@ -402,10 +402,10 @@ async function main() {
 
   console.log("\n🎉 Database Seed Complete! Account Credentials:");
   console.log("===============================================================");
-  console.log("👑 ADMIN:   admin@prebuiltui.com          | Password: admin123");
-  console.log("💼 SELLER:  seller.sarah@prebuiltui.com   | Password: seller123");
-  console.log("💼 SELLER:  seller.marcus@prebuiltui.com  | Password: seller123");
-  console.log("👤 BUYER:   buyer@prebuiltui.com          | Password: buyer123");
+  console.log("👑 ADMIN:   admin@havenstone.com          | Password: admin123");
+  console.log("💼 SELLER:  seller.sarah@havenstone.com   | Password: seller123");
+  console.log("💼 SELLER:  seller.marcus@havenstone.com  | Password: seller123");
+  console.log("👤 BUYER:   buyer@havenstone.com          | Password: buyer123");
   console.log("===============================================================\n");
 }
 

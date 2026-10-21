@@ -11,9 +11,12 @@ import { PropertiesViewContainer } from "@/components/properties/properties-view
 import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Luxury Residences & Estates | PrebuiltUI Portfolio",
+  title: "Luxury Residences & Architectural Estates",
   description:
     "Explore our collection of premier estates, sky penthouses, and architectural trophies across Beverly Hills, Manhattan, Miami, and Aspen.",
+  alternates: {
+    canonical: "/properties",
+  },
 };
 
 interface PropertiesPageProps {

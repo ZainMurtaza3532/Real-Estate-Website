@@ -1,4 +1,4 @@
-# 🏰 PrebuiltUI Luxury Real Estate & Brokerage Platform
+# 🏰 HavenStone Estates - Luxury Real Estate & Brokerage Platform
 
 A production-ready, full-stack luxury real estate application built with **Next.js 15 (App Router)**, **React 19**, **Prisma ORM**, **PostgreSQL**, and **NextAuth.js v5 (Auth.js)**. 
 

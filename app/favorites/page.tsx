@@ -6,7 +6,7 @@ import { PropertyCard } from "@/components/properties/property-card";
 import { Compass, Heart, ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Saved Residences - PrebuiltUI Estate",
+  title: "Saved Residences - HavenStone Estates",
   description: "View your saved luxury properties and architectural sanctuaries.",
 };
 

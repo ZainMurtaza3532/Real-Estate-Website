@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Platform Analytics & Activity Log - PrebuiltUI Super Admin",
+  title: "Platform Analytics & Activity Log - HavenStone Estates Super Admin",
   description: "Executive platform analytics, monthly inventory growth, inquiries funnel, and property leaderboard.",
 };
 

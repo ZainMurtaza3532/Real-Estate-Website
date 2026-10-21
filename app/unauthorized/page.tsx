@@ -4,7 +4,7 @@ import { ShieldAlert, ArrowLeft, LogIn, Compass } from "lucide-react";
 import { auth } from "@/auth";
 
 export const metadata = {
-  title: "Access Restricted | 403 Forbidden - PrebuiltUI",
+  title: "Access Restricted | 403 Forbidden - HavenStone Estates",
   description: "Administrator privileges are required to view this area.",
 };
 

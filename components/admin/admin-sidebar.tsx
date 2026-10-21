@@ -83,7 +83,7 @@ export function AdminSidebar({ pendingCount = 0, user }: AdminSidebarProps) {
           <div className="flex items-center gap-2.5">
             <Image
               src="/logo.svg"
-              alt="estate logo"
+              alt="HavenStone Estates"
               width={100}
               height={30}
               className="h-7 w-auto object-contain select-none"

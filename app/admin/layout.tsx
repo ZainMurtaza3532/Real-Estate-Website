@@ -6,7 +6,7 @@ import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 
 export const metadata = {
-  title: "Super Admin Control Center - PrebuiltUI",
+  title: "Super Admin Control Center - HavenStone Estates",
   description: "Executive moderation, listing approvals, user curation, and platform governance.",
 };
 

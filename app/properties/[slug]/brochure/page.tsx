@@ -39,7 +39,7 @@ export async function generateMetadata({
   if (!property) return { title: "Brochure Not Found" };
 
   return {
-    title: `Official Property Dossier - ${property.title} | PrebuiltUI Luxury Real Estate`,
+    title: `Official Property Dossier - ${property.title} | HavenStone Estates`,
     description: `Download or print the executive property brochure for ${property.title}.`,
   };
 }
@@ -81,10 +81,10 @@ export default async function PropertyBrochurePage({ params }: BrochurePageProps
   const pricePerSqFt =
     property.areaSqFt > 0 ? Math.round(property.price / property.areaSqFt) : 0;
 
-  const sellerName = property.seller?.name || "PrebuiltUI Private Brokerage";
+  const sellerName = property.seller?.name || "HavenStone Private Brokerage";
   const agencyName = property.seller?.agencyName || "Luxury Estate Advisors";
   const sellerPhone = property.seller?.phone || property.seller?.whatsappNumber || "+1 (310) 555-0199";
-  const sellerEmail = property.seller?.email || "concierge@prebuiltui.com";
+  const sellerEmail = property.seller?.email || "concierge@havenstone.com";
 
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-900 py-8 px-4 sm:px-6 md:px-8 print:p-0 print:bg-white">
@@ -323,7 +323,7 @@ export default async function PropertyBrochurePage({ params }: BrochurePageProps
         {/* Legal Footer */}
         <footer className="pt-6 border-t border-zinc-200 text-center text-[10px] text-zinc-400 space-y-1">
           <p>
-            © {new Date().getFullYear()} PrebuiltUI Luxury Real Estate Inc. All rights reserved. Equal Housing Opportunity.
+            © {new Date().getFullYear()} HavenStone Realty Inc. All rights reserved. Equal Housing Opportunity.
           </p>
           <p>
             Information deemed reliable but not guaranteed. All measurements and square footage are approximate.

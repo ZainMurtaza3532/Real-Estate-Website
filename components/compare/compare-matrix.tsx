@@ -355,7 +355,7 @@ export function CompareMatrix({ initialProperties }: CompareMatrixProps) {
               </td>
               {properties.map((p) => (
                 <td key={p.id} className="p-4 sm:p-5 text-zinc-700 border-l border-zinc-100">
-                  <p className="font-semibold text-zinc-900">{p.seller?.name || "PrebuiltUI Advisor"}</p>
+                  <p className="font-semibold text-zinc-900">{p.seller?.name || "HavenStone Advisor"}</p>
                   <p className="text-[11px] text-zinc-500">{p.seller?.agencyName || "Luxury Estate Group"}</p>
                 </td>
               ))}

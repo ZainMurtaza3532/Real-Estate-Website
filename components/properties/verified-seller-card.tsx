@@ -34,7 +34,7 @@ export function VerifiedSellerCard({
   propertySlug,
   seller,
 }: VerifiedSellerCardProps) {
-  const sellerName = seller?.name || "PrebuiltUI Private Brokerage";
+  const sellerName = seller?.name || "HavenStone Private Brokerage";
   const agency = seller?.agencyName || "Luxury Estate Advisor";
   const contactPhone = seller?.phone || seller?.whatsappNumber || null;
   const waNumber = seller?.whatsappNumber || seller?.phone || null;

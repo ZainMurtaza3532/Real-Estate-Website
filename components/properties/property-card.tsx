@@ -150,7 +150,7 @@ export function PropertyCard({
         <Link href={`/properties/${property.slug}`} className="block relative h-full w-full">
           <Image
             src={images[currentImageIndex]}
-            alt={property.title}
+            alt={`${property.title} - ${propertyTypeLabel} in ${property.city}, ${property.state}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

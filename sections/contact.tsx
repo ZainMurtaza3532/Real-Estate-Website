@@ -89,7 +89,7 @@ export function Contact() {
                 Message Received
               </h4>
               <p className="text-xs text-zinc-500 max-w-sm mx-auto leading-relaxed">
-                Thank you for contacting PrebuiltUI Private Brokerage. A dedicated advisor has been assigned to your request and will contact you promptly.
+                Thank you for contacting HavenStone Private Brokerage. A dedicated advisor has been assigned to your request and will contact you promptly.
               </p>
               <button
                 type="button"
@@ -229,7 +229,7 @@ export function Contact() {
           <div className="relative w-[382px] h-[455px] overflow-hidden rounded-3xl border border-zinc-200 shadow-lg">
             <Image
               src={houseImage}
-              alt="PrebuiltUI Private Estate"
+              alt="HavenStone Luxury Architectural Residence"
               width={382}
               height={455}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 select-none brightness-85"

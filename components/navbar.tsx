@@ -59,7 +59,7 @@ export function Navbar() {
             width={100}
             height={40}
             src="/logo.svg"
-            alt="PrebuiltUI Estate"
+            alt="HavenStone Estates"
             style={{ width: "auto", height: "auto" }}
             className={`transition-all duration-500 h-8 w-auto ${
               isLightMode ? "invert opacity-90" : "brightness-200"

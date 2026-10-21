@@ -19,7 +19,7 @@ export function Footer() {
           {/* Left Brand Details */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6">
             <a href="#" className="select-none">
-              <img src="/logo.svg" alt="estate" />
+              <img src="/logo.svg" alt="HavenStone Estates" />
             </a>
             <p className="text-zinc-300 text-sm/5.5 max-w-md">
               Helping buyers, seller and investors find the right property with confidence and expert guidance.
@@ -150,7 +150,7 @@ export function Footer() {
 
         <div className="w-full h-px bg-zinc-800"></div>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-5 text-xs text-zinc-300">
-          <p>Copyright 2026 © PrebuiltUI All Right Reserved.</p>
+          <p>Copyright {new Date().getFullYear()} © HavenStone Realty. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white transition-colors duration-200">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors duration-200">Terms of Service</a>

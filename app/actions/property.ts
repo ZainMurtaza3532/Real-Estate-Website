@@ -47,6 +47,7 @@ const SellPropertySchema = z.object({
     .array(z.string().min(1))
     .min(1, "At least one property image is required")
     .max(10, "You can upload up to 10 photos"),
+  virtualTourUrl: z.string().optional().nullable(),
   videoTourUrl: z.string().optional().nullable(),
 
   // Step 5: Seller Contact Info
@@ -144,6 +145,7 @@ export async function submitSellerProperty(data: SellPropertyInput): Promise<{
         latitude: validData.latitude || null,
         longitude: validData.longitude || null,
         images: validData.images,
+        virtualTourUrl: validData.virtualTourUrl?.trim() || null,
         videoTourUrl: validData.videoTourUrl?.trim() || null,
         amenities: validData.amenities,
         featured: false,

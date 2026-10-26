@@ -58,20 +58,18 @@ export function DashboardNav({
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition shrink-0 ${
-                link.active
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition shrink-0 ${link.active
                   ? "bg-zinc-950 text-white shadow-xs"
                   : "bg-white text-zinc-600 border border-zinc-200 hover:text-zinc-950 hover:bg-zinc-50"
-              }`}
+                }`}
             >
               <Icon className="size-3.5" />
               <span>{link.label}</span>
 
               {link.badge !== null && (
                 <span
-                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-                    link.badgeColor || (link.active ? "bg-white/20 text-white" : "bg-zinc-100 text-zinc-800")
-                  }`}
+                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${link.badgeColor || (link.active ? "bg-white/20 text-white" : "bg-zinc-100 text-zinc-800")
+                    }`}
                 >
                   {link.badge}
                 </span>

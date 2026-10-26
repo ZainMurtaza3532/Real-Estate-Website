@@ -46,9 +46,9 @@ export function VerifiedSellerCard({
   // Member since date
   const memberSince = seller?.createdAt
     ? new Date(seller.createdAt).toLocaleDateString("en-US", {
-        month: "short",
-        year: "numeric",
-      })
+      month: "short",
+      year: "numeric",
+    })
     : "Jan 2024";
 
   // Pre-filled WhatsApp message including Property Name, Price, and Page URL
@@ -58,9 +58,8 @@ export function VerifiedSellerCard({
       ? window.location.href
       : `http://localhost:3000/properties/${propertySlug || ""}`;
 
-  const waMessage = `Hi, I am interested in your luxury residence: "${propertyTitle}"${
-    formattedPrice ? ` (Price: ${formattedPrice})` : ""
-  }.\nProperty Link: ${pageUrl}`;
+  const waMessage = `Hi, I am interested in your luxury residence: "${propertyTitle}"${formattedPrice ? ` (Price: ${formattedPrice})` : ""
+    }.\nProperty Link: ${pageUrl}`;
 
   const waUrl = cleanWa
     ? `https://wa.me/${cleanWa}?text=${encodeURIComponent(waMessage)}`

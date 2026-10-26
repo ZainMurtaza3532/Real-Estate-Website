@@ -164,7 +164,7 @@ export default async function PropertyDetailPage({
   // Unapproved/Draft/Rejected properties can only be previewed by the listing seller or an ADMIN.
   const isOwnerOrAdmin =
     Boolean(session?.user?.id &&
-    (session.user.id === property.sellerId || session.user.role === "ADMIN"));
+      (session.user.id === property.sellerId || session.user.role === "ADMIN"));
 
   if (property.listingStatus !== "APPROVED" && !isOwnerOrAdmin) {
     notFound();
@@ -228,8 +228,8 @@ export default async function PropertyDetailPage({
     property.propertyType === "APARTMENT" || property.propertyType === "PENTHOUSE"
       ? "Common Interest"
       : `${(property.areaSqFt * 1.85 / 43560).toFixed(2)} Acres (${Math.round(
-          property.areaSqFt * 2.2
-        ).toLocaleString()} sqft lot)`;
+        property.areaSqFt * 2.2
+      ).toLocaleString()} sqft lot)`;
 
   const yearBuilt =
     property.propertyType === "PENTHOUSE" ? 2023 : 2021;

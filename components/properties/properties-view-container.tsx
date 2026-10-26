@@ -84,11 +84,10 @@ export function PropertiesViewContainer({
           <button
             type="button"
             onClick={() => setViewMode("grid")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
-              viewMode === "grid"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${viewMode === "grid"
                 ? "bg-zinc-950 text-white shadow-xs"
                 : "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100"
-            }`}
+              }`}
           >
             <LayoutGrid className="size-3.5" />
             <span>Grid View</span>
@@ -97,11 +96,10 @@ export function PropertiesViewContainer({
           <button
             type="button"
             onClick={() => setViewMode("split")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
-              viewMode === "split"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${viewMode === "split"
                 ? "bg-zinc-950 text-white shadow-xs"
                 : "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100"
-            }`}
+              }`}
           >
             <Columns2 className="size-3.5" />
             <span>Split Map</span>
@@ -110,11 +108,10 @@ export function PropertiesViewContainer({
           <button
             type="button"
             onClick={() => setViewMode("map")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
-              viewMode === "map"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${viewMode === "map"
                 ? "bg-zinc-950 text-white shadow-xs"
                 : "text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100"
-            }`}
+              }`}
           >
             <MapIcon className="size-3.5" />
             <span>Full Map</span>

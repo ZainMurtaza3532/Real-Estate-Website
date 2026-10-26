@@ -141,6 +141,7 @@ export function SellWizard({ currentUser, redirectAfterSubmit = "/properties" }:
     latitude: 34.0736,
     longitude: -118.4004,
     images: [],
+    virtualTourUrl: "",
     videoTourUrl: "",
     phone: currentUser.phone || "",
     whatsappDirect: true,
@@ -993,11 +994,13 @@ export function SellWizard({ currentUser, redirectAfterSubmit = "/properties" }:
 
                 <MediaUploader
                   images={formData.images}
+                  virtualTourUrl={formData.virtualTourUrl}
                   videoTourUrl={formData.videoTourUrl}
                   onChangeImages={(imgs) => {
                     updateField("images", imgs);
                     clearError("images");
                   }}
+                  onChangeVirtualTourUrl={(url) => updateField("virtualTourUrl", url)}
                   onChangeVideoTourUrl={(url) => updateField("videoTourUrl", url)}
                 />
               </motion.div>

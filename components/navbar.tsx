@@ -48,11 +48,10 @@ export function Navbar() {
     <>
       <nav
         aria-label="Main Navigation"
-        className={`fixed z-40 flex items-center justify-between left-1/2 -translate-x-1/2 transition-all duration-500 py-3.5 px-6 ${
-          isPill
+        className={`fixed z-40 flex items-center justify-between left-1/2 -translate-x-1/2 transition-all duration-500 py-3.5 px-6 ${isPill
             ? "lg:w-5xl w-[calc(100vw-24px)] bg-white/95 backdrop-blur-xl rounded-full mt-4 border border-zinc-200/80 shadow-md"
             : "md:px-16 lg:px-24 xl:px-32 w-full pt-6"
-        }`}
+          }`}
       >
         <Link href="/" className="flex items-center gap-3 select-none group">
           <Image
@@ -61,9 +60,8 @@ export function Navbar() {
             src="/logo.svg"
             alt="HavenStone Estates"
             style={{ width: "auto", height: "auto" }}
-            className={`transition-all duration-500 h-8 w-auto ${
-              isLightMode ? "invert opacity-90" : "brightness-200"
-            }`}
+            className={`transition-all duration-500 h-8 w-auto ${isLightMode ? "invert opacity-90" : "brightness-200"
+              }`}
           />
         </Link>
 
@@ -71,59 +69,54 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link
             href="/"
-            className={`transition-colors duration-300 ${
-              pathname === "/"
+            className={`transition-colors duration-300 ${pathname === "/"
                 ? isLightMode
                   ? "text-zinc-950 font-bold"
                   : "text-white font-bold"
                 : isLightMode
-                ? "text-zinc-600 hover:text-zinc-950"
-                : "text-white/80 hover:text-white"
-            }`}
+                  ? "text-zinc-600 hover:text-zinc-950"
+                  : "text-white/80 hover:text-white"
+              }`}
           >
             Home
           </Link>
           <Link
             href="/properties"
-            className={`transition-colors duration-300 ${
-              pathname.startsWith("/properties")
+            className={`transition-colors duration-300 ${pathname.startsWith("/properties")
                 ? isLightMode
                   ? "text-zinc-950 font-bold"
                   : "text-white font-bold"
                 : isLightMode
-                ? "text-zinc-600 hover:text-zinc-950"
-                : "text-white/80 hover:text-white"
-            }`}
+                  ? "text-zinc-600 hover:text-zinc-950"
+                  : "text-white/80 hover:text-white"
+              }`}
           >
             Properties
           </Link>
           <Link
             href="/#services"
-            className={`transition-colors duration-300 ${
-              isLightMode
+            className={`transition-colors duration-300 ${isLightMode
                 ? "text-zinc-600 hover:text-zinc-950"
                 : "text-white/80 hover:text-white"
-            }`}
+              }`}
           >
             Services
           </Link>
           <Link
             href="/#testimonials"
-            className={`transition-colors duration-300 ${
-              isLightMode
+            className={`transition-colors duration-300 ${isLightMode
                 ? "text-zinc-600 hover:text-zinc-950"
                 : "text-white/80 hover:text-white"
-            }`}
+              }`}
           >
             Testimonials
           </Link>
           <Link
             href="/#contact"
-            className={`transition-colors duration-300 ${
-              isLightMode
+            className={`transition-colors duration-300 ${isLightMode
                 ? "text-zinc-600 hover:text-zinc-950"
                 : "text-white/80 hover:text-white"
-            }`}
+              }`}
           >
             Contact
           </Link>
@@ -137,22 +130,20 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className={`px-4 py-2 text-sm font-medium transition-colors ${
-                  isLightMode
+                className={`px-4 py-2 text-sm font-medium transition-colors ${isLightMode
                     ? "text-zinc-700 hover:text-zinc-950"
                     : "text-white hover:text-white/80"
-                }`}
+                  }`}
               >
                 Sign In
               </Link>
 
               <Link
                 href="/signup"
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-xs ${
-                  isLightMode
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-xs ${isLightMode
                     ? "bg-zinc-900 text-white hover:bg-zinc-800"
                     : "bg-white text-zinc-900 hover:bg-zinc-100"
-                }`}
+                  }`}
               >
                 Join Portal
               </Link>
@@ -164,9 +155,8 @@ export function Navbar() {
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation menu"
-          className={`md:hidden p-2 rounded-xl transition cursor-pointer ${
-            isLightMode ? "text-zinc-800 hover:bg-zinc-100" : "text-white hover:bg-white/10"
-          }`}
+          className={`md:hidden p-2 rounded-xl transition cursor-pointer ${isLightMode ? "text-zinc-800 hover:bg-zinc-100" : "text-white hover:bg-white/10"
+            }`}
         >
           <Menu className="size-6" />
         </button>
@@ -174,9 +164,8 @@ export function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`${
-          mobileOpen ? "w-full opacity-100 pointer-events-auto" : "w-0 opacity-0 pointer-events-none"
-        } md:hidden fixed inset-0 z-50 transition-all duration-300 overflow-hidden bg-zinc-950/95 backdrop-blur-2xl flex flex-col justify-center items-center gap-6 px-8 text-lg font-medium`}
+        className={`${mobileOpen ? "w-full opacity-100 pointer-events-auto" : "w-0 opacity-0 pointer-events-none"
+          } md:hidden fixed inset-0 z-50 transition-all duration-300 overflow-hidden bg-zinc-950/95 backdrop-blur-2xl flex flex-col justify-center items-center gap-6 px-8 text-lg font-medium`}
       >
         <button
           onClick={() => setMobileOpen(false)}

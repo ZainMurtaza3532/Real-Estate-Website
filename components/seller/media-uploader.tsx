@@ -17,15 +17,19 @@ import {
 
 interface MediaUploaderProps {
   images: string[];
+  virtualTourUrl?: string | null;
   videoTourUrl?: string | null;
   onChangeImages: (images: string[]) => void;
+  onChangeVirtualTourUrl?: (url: string) => void;
   onChangeVideoTourUrl: (url: string) => void;
 }
 
 export function MediaUploader({
   images,
+  virtualTourUrl,
   videoTourUrl,
   onChangeImages,
+  onChangeVirtualTourUrl,
   onChangeVideoTourUrl,
 }: MediaUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
@@ -140,11 +144,10 @@ export function MediaUploader({
         onDragLeave={() => setIsDragOver(false)}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative flex flex-col items-center justify-center p-8 sm:p-10 rounded-3xl border-2 border-dashed transition-all cursor-pointer ${
-          isDragOver
+        className={`relative flex flex-col items-center justify-center p-8 sm:p-10 rounded-3xl border-2 border-dashed transition-all cursor-pointer ${isDragOver
             ? "border-black bg-zinc-100/80 scale-[0.99]"
             : "border-zinc-300 bg-zinc-50 hover:bg-zinc-100/50 hover:border-zinc-400"
-        }`}
+          }`}
       >
         <input
           ref={fileInputRef}
@@ -296,22 +299,41 @@ export function MediaUploader({
         </div>
       )}
 
-      {/* Video Tour URL Field */}
-      <div className="pt-4 border-t border-zinc-100">
-        <label className="text-xs font-semibold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">
-          <Video className="size-4 text-zinc-600" />
-          <span>Virtual Video Tour (Optional)</span>
-        </label>
-        <p className="text-xs text-zinc-500 mb-2">
-          Embed a YouTube, Vimeo, or Matterport 3D walkthrough URL to elevate listing engagement.
-        </p>
-        <input
-          type="url"
-          value={videoTourUrl || ""}
-          onChange={(e) => onChangeVideoTourUrl(e.target.value)}
-          placeholder="e.g. https://www.youtube.com/watch?v=..."
-          className="w-full px-4 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
-        />
+      {/* 360° Virtual Tour & Video Tour URL Fields */}
+      <div className="pt-4 border-t border-zinc-100 space-y-4">
+        <div>
+          <label className="text-xs font-semibold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">
+            <Sparkles className="size-4 text-amber-500" />
+            <span>360° Virtual Spatial Tour (Matterport / Kuula / iStaging)</span>
+          </label>
+          <p className="text-xs text-zinc-500 mb-2">
+            Paste a 360° spatial walkthrough link (e.g. Matterport 3D showcase, Kuula, or custom 3D iframe viewer).
+          </p>
+          <input
+            type="url"
+            value={virtualTourUrl || ""}
+            onChange={(e) => onChangeVirtualTourUrl?.(e.target.value)}
+            placeholder="e.g. https://my.matterport.com/show/?m=..."
+            className="w-full px-4 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition"
+          />
+        </div>
+
+        <div>
+          <label className="text-xs font-semibold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">
+            <Video className="size-4 text-rose-500" />
+            <span>Video Walkthrough (YouTube / Vimeo / MP4)</span>
+          </label>
+          <p className="text-xs text-zinc-500 mb-2">
+            Embed a video walkthrough link to showcase cinematic grounds and architectural drone footage.
+          </p>
+          <input
+            type="url"
+            value={videoTourUrl || ""}
+            onChange={(e) => onChangeVideoTourUrl(e.target.value)}
+            placeholder="e.g. https://www.youtube.com/watch?v=..."
+            className="w-full px-4 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition"
+          />
+        </div>
       </div>
     </div>
   );

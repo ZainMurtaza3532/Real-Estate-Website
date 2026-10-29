@@ -164,13 +164,20 @@ export default async function AgentProfilePage({ params }: AgentProfilePageProps
                     key={prop.id}
                     property={{
                       ...prop,
+                      description: "",
+                      address: `${prop.city}, ${prop.state}`,
+                      zipCode: "",
+                      amenities: [],
+                      featured: false,
                       seller: {
-                        name: agent.name,
-                        agencyName: agent.agencyName,
-                        image: agent.image,
+                        name: agent.name ?? "Luxury Advisor",
+                        agencyName: agent.agencyName ?? null,
+                        image: agent.image ?? null,
+                        phone: agent.phone ?? null,
+                        email: agent.email ?? null,
                       },
                     }}
-                    isFavorited={false}
+                    initialFavorited={false}
                   />
                 ))}
               </div>

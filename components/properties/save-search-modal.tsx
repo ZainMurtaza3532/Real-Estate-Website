@@ -25,7 +25,8 @@ export function SaveSearchModal() {
   const listingType = searchParams.get("listing") || "";
   const minPrice = searchParams.get("minPrice") ? Number(searchParams.get("minPrice")) : undefined;
   const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : undefined;
-  const bedrooms = searchParams.get("beds") ? parseInt(searchParams.get("beds")) : undefined;
+  const bedsParam = searchParams.get("beds");
+  const bedrooms = bedsParam ? parseInt(bedsParam, 10) : undefined;
 
   const handleOpen = () => {
     if (!session?.user?.id) {

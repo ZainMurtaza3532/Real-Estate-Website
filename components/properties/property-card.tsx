@@ -24,7 +24,7 @@ export interface PropertyCardProps {
     id: string;
     title: string;
     slug: string;
-    description: string;
+    description?: string;
     price: number;
     propertyType: "HOUSE" | "APARTMENT" | "VILLA" | "PENTHOUSE" | "COMMERCIAL" | "PLOT" | string;
     listingType: "FOR_SALE" | "FOR_RENT" | string;
@@ -35,38 +35,44 @@ export interface PropertyCardProps {
     areaSqFt: number;
     garage?: number;
     garageSpaces?: number;
-    address: string;
+    address?: string;
     city: string;
     state: string;
-    zipCode: string;
+    zipCode?: string;
     images: string[];
-    amenities: string[];
-    featured: boolean;
+    amenities?: string[];
+    featured?: boolean;
     seller?: {
       name: string | null;
-      agencyName: string | null;
-      image: string | null;
+      agencyName?: string | null;
+      image?: string | null;
+      phone?: string | null;
+      email?: string | null;
     } | null;
     agent?: {
       name: string | null;
-      agencyName: string | null;
-      image: string | null;
+      agencyName?: string | null;
+      image?: string | null;
+      phone?: string | null;
+      email?: string | null;
     } | null;
   };
   initialFavorited?: boolean;
+  isFavorited?: boolean;
   isAuthenticated?: boolean;
 }
 
 export function PropertyCard({
   property,
   initialFavorited = false,
+  isFavorited: legacyFavorited,
   isAuthenticated = false,
 }: PropertyCardProps) {
   const router = useRouter();
   const { toggleCompare, isInCompare } = useCompare();
   const inCompare = isInCompare(property.id);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isFavorited, setIsFavorited] = useState(initialFavorited);
+  const [isFavorited, setIsFavorited] = useState(legacyFavorited ?? initialFavorited);
   const [isPending, startTransition] = useTransition();
   const [showAuthNotice, setShowAuthNotice] = useState(false);
 
@@ -287,7 +293,7 @@ export function PropertyCard({
         <p className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 line-clamp-1">
           <MapPin className="size-3.5 shrink-0 text-zinc-400" />
           <span>
-            {property.address}, {property.city}, {property.state} {property.zipCode}
+            {property.address ? `${property.address}, ` : ""}{property.city}, {property.state}{property.zipCode ? ` ${property.zipCode}` : ""}
           </span>
         </p>
 

@@ -18,17 +18,11 @@ const urbanist = Urbanist({
   subsets: ["latin"],
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "https://rehome-city.vercel.app");
+const siteUrl = "https://rehome-city.vercel.app";
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "HavenStone Estates";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL("https://rehome-city.vercel.app"),
   title: {
     default: "HavenStone Estates | Luxury Real Estate & Premium Homes",
     template: "%s | HavenStone Estates",
@@ -54,7 +48,7 @@ export const metadata: Metadata = {
     "HavenStone Estates",
   ],
   alternates: {
-    canonical: "/",
+    canonical: "https://rehome-city.vercel.app",
   },
   robots: {
     index: true,
@@ -113,6 +107,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preload" as="image" href="/images/hero-bg.jpg" fetchPriority="high" />
+      </head>
       <body className="min-h-full flex flex-col">
         {/* Google Analytics / Tag Manager */}
         {gaId && (

@@ -21,12 +21,12 @@ export function HeroSection() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <Image
           src={imgSrc}
-          alt="Luxury Modern Architecture Villa"
+          alt="HavenStone Luxury Architecture Villa"
           fill
-          priority
-          quality={95}
+          priority={true}
           sizes="100vw"
-          className="object-cover object-center scale-[1.02]"
+          quality={85}
+          className="object-cover object-center"
           onError={() =>
             setImgSrc(
               "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"

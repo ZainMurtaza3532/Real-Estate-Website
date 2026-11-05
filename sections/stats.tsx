@@ -24,7 +24,7 @@ export function Stats() {
                     viewport={{ once: true }}
                     transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
                 >
-                    Find Your Dream Home With Confidence
+                    Curated Luxury Properties for Sale
                 </motion.h2>
 
                 <motion.p className="text-zinc-500 text-sm md:text-base mt-3 max-w-[520px]"

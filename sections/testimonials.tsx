@@ -21,9 +21,9 @@ export function Testimonials() {
                     blurDataURL={BLUR_DATA_URL}
                 />
                 <div className="flex flex-col">
-                    <span className="text-sm font-medium text-zinc-800">
+                    <h3 className="text-sm font-medium text-zinc-800">
                         {item.name}
-                    </span>
+                    </h3>
                     <span className="text-sm text-zinc-600 mt-0.5">
                         {item.location}
                     </span>
@@ -66,7 +66,7 @@ export function Testimonials() {
                         viewport={{ once: true }}
                         transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
                     >
-                        Trusted by Homebuyers. Proven by Results.
+                        Client Testimonials & Proven Track Record
                     </motion.h2>
 
                     <motion.p className="text-zinc-500 text-sm md:text-base mt-2.5 max-w-[340px]"

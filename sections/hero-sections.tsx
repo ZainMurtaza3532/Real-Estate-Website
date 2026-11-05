@@ -58,7 +58,7 @@ export function HeroSection() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
         >
-          Helping You Find the Perfect Place to Call Home
+          Find Your Dream Luxury Home with HavenStone Estates
         </motion.h1>
 
         <motion.p

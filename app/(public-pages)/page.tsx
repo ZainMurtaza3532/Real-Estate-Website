@@ -1,5 +1,6 @@
 import { CallToAction } from "@/sections/call-to-action";
 import { Contact } from "@/sections/contact";
+import { FaqSection } from "@/sections/faq-section";
 import { Gallery } from "@/sections/gallery";
 import { HeroSection } from "@/sections/hero-sections";
 import { Stats } from "@/sections/stats";
@@ -19,6 +20,7 @@ export default function Home() {
       <WhyChooseUs />
       <Testimonials />
       <CallToAction />
+      <FaqSection />
       <Contact />
     </main>
   );

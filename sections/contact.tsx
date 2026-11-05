@@ -73,7 +73,7 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
           >
-            Connect with us <br />to secure the best deal
+            Get in Touch with Our Real Estate Advisory
           </motion.h2>
 
           <p className="text-xs text-zinc-500 mt-2">
@@ -86,9 +86,9 @@ export function Contact() {
               <div className="size-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="size-6" />
               </div>
-              <h4 className="font-heading text-lg font-bold text-zinc-950">
+              <h3 className="font-heading text-lg font-bold text-zinc-950">
                 Message Received
-              </h4>
+              </h3>
               <p className="text-xs text-zinc-500 max-w-sm mx-auto leading-relaxed">
                 Thank you for contacting HavenStone Private Brokerage. A dedicated advisor has been assigned to your request and will contact you promptly.
               </p>

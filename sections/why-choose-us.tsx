@@ -33,7 +33,7 @@ export function WhyChooseUs() {
                         viewport={{ once: true }}
                         transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
                     >
-                        Find the Right Property With Confidence
+                        Why Discerning Buyers Choose HavenStone
                     </motion.h2>
 
                     {/* Accordion List */}
@@ -52,9 +52,9 @@ export function WhyChooseUs() {
                                             <div>
                                                 {item.icon}
                                             </div>
-                                            <span className="text-sm md:text-base text-zinc-600">
+                                            <h3 className="text-sm md:text-base text-zinc-700 font-medium">
                                                 {item.title}
-                                            </span>
+                                            </h3>
                                         </div>
                                         <div>
                                             {isOpen ? (

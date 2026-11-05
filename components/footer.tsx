@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
@@ -18,8 +19,15 @@ export function Footer() {
 
           {/* Left Brand Details */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6">
-            <a href="#" className="select-none">
-              <img src="/logo.svg" alt="HavenStone Estates" />
+            <a href="#" className="select-none inline-block">
+              <Image
+                src="/logo.svg"
+                alt="HavenStone Estates"
+                width={160}
+                height={36}
+                loading="lazy"
+                className="h-8 w-auto"
+              />
             </a>
             <p className="text-zinc-300 text-sm/5.5 max-w-md">
               Helping buyers, seller and investors find the right property with confidence and expert guidance.

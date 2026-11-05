@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Plus, Minus } from "lucide-react";
 import { whyChooseUsData } from "../data/data";
+import { BLUR_DATA_URL } from "@/lib/image-constants";
 const houseImage = "/assets/house.png";
 
 export function WhyChooseUs() {
@@ -96,13 +97,30 @@ export function WhyChooseUs() {
                         transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                     >
                         {/* Default Image */}
-                        <Image src={houseImage} alt="Luxury Residential Home" width={486} height={411}
+                        <Image
+                            src={houseImage}
+                            alt="Luxury Residential Home"
+                            width={486}
+                            height={411}
+                            loading="lazy"
+                            placeholder="blur"
+                            blurDataURL={BLUR_DATA_URL}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out ${openIndex === null ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                                 }`}
                         />
                         {/* Accordion-specific images */}
                         {whyChooseUsData.map((item, index) => (
-                            <Image key={index} src={item.image} alt={item.title} width={486} height={411}
+                            <Image
+                                key={index}
+                                src={item.image}
+                                alt={item.title}
+                                width={486}
+                                height={411}
+                                loading="lazy"
+                                placeholder="blur"
+                                blurDataURL={BLUR_DATA_URL}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out ${openIndex === index ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                                     }`}
                             />

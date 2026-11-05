@@ -55,11 +55,10 @@ export function Navbar() {
       >
         <Link href="/" className="flex items-center gap-3 select-none group">
           <Image
-            width={100}
-            height={40}
+            width={140}
+            height={36}
             src="/logo.svg"
             alt="HavenStone Estates"
-            style={{ width: "auto", height: "auto" }}
             className={`transition-all duration-500 h-8 w-auto ${isLightMode ? "invert opacity-90" : "brightness-200"
               }`}
           />

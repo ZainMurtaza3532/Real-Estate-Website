@@ -120,9 +120,8 @@ function SignupForm() {
           <Image
             src="/logo.svg"
             alt="HavenStone Estates"
-            width={100}
+            width={120}
             height={32}
-            style={{ width: "auto", height: "auto" }}
             className="h-8 w-auto invert"
           />
         </Link>

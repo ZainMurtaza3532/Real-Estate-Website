@@ -6,6 +6,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { submitContactForm } from "@/actions/inquiries";
 import { Send, CheckCircle2, Phone, Mail, Clock, ShieldCheck } from "lucide-react";
+import { BLUR_DATA_URL } from "@/lib/image-constants";
 
 const houseImage = "/assets/house.png";
 
@@ -232,6 +233,10 @@ export function Contact() {
               alt="HavenStone Luxury Architectural Residence"
               width={382}
               height={455}
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 select-none brightness-85"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { BLUR_DATA_URL } from "@/lib/image-constants";
 
 const galleryImage1 = "/assets/galleryImage1.png";
 const galleryImage2 = "/assets/galleryImage2.png";
@@ -14,9 +15,39 @@ export function CallToAction() {
     <section className="py-36 px-4 md:px-16 lg:px-24 xl:px-32 w-full flex flex-col items-center justify-center text-center">
       <div className="max-w-4xl mx-auto flex flex-col items-center">
         <div className="relative w-full max-w-sm overflow-hidden md:max-w-[600px] h-[200px] md:h-[220px] mb-12 flex justify-center items-center md:overflow-visible group/cta-images select-none">
-          <Image height={139} width={251} src={galleryImage1} alt="Luxury Space 1" className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-0 origin-bottom-right -rotate-12 translate-x-[-115px] translate-y-4 group-hover/cta-images:translate-x-[-155px] group-hover/cta-images:rotate-[-16deg] group-hover/cta-images:translate-y-2" />
-          <Image height={139} width={251} src={galleryImage3} alt="Luxury Space 3" className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-0 origin-bottom-left rotate-12 translate-x-[115px] translate-y-4 group-hover/cta-images:translate-x-[155px] group-hover/cta-images:rotate-16 group-hover/cta-images:translate-y-2" />
-          <Image height={139} width={251} src={galleryImage2} alt="Luxury Space 2" className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-10 translate-y-[-10px] group-hover/cta-images:translate-y-[-22px] group-hover/cta-images:scale-105" />
+          <Image
+            height={139}
+            width={251}
+            src={galleryImage1}
+            alt="Luxury Space 1"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-0 origin-bottom-right -rotate-12 translate-x-[-115px] translate-y-4 group-hover/cta-images:translate-x-[-155px] group-hover/cta-images:rotate-[-16deg] group-hover/cta-images:translate-y-2"
+          />
+          <Image
+            height={139}
+            width={251}
+            src={galleryImage3}
+            alt="Luxury Space 3"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-0 origin-bottom-left rotate-12 translate-x-[115px] translate-y-4 group-hover/cta-images:translate-x-[155px] group-hover/cta-images:rotate-16 group-hover/cta-images:translate-y-2"
+          />
+          <Image
+            height={139}
+            width={251}
+            src={galleryImage2}
+            alt="Luxury Space 2"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="absolute w-[200px] md:w-[251px] h-[100px] md:h-[139px] object-cover rounded-[10px] transition-all duration-500 ease-out z-10 translate-y-[-10px] group-hover/cta-images:translate-y-[-22px] group-hover/cta-images:scale-105"
+          />
         </div>
 
         <motion.h2 className="text-3xl md:text-[40px] text-zinc-800 tracking-tight max-w-[520px] mb-3"

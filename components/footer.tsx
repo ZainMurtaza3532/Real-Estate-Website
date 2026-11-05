@@ -32,6 +32,10 @@ export function Footer() {
             <p className="text-zinc-300 text-sm/5.5 max-w-md">
               Helping buyers, seller and investors find the right property with confidence and expert guidance.
             </p>
+            <div className="text-xs text-zinc-400 flex flex-col gap-1">
+              <span>100 Ocean Drive, Suite 400, Miami, FL 33139</span>
+              <span>Direct: +1 555 019 2831</span>
+            </div>
           </div>
 
           {/* Right Link Columns */}

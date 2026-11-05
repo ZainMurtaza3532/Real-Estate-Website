@@ -4,7 +4,13 @@ import { prisma } from "@/lib/prisma";
 export const revalidate = 3600; // Revalidate sitemap at most once per hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://havenstone.com";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://rehome-city.vercel.app");
 
   // 1. Static Public Pages
   const staticRoutes: MetadataRoute.Sitemap = [

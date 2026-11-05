@@ -21,7 +21,13 @@ export function JsonLd({ data }: JsonLdProps) {
  * Generates RealEstateAgent and Organization structured data for HavenStone Estates.
  */
 export function getRealEstateAgentSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://havenstone.com";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://rehome-city.vercel.app");
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "HavenStone Estates";
 
   return {
@@ -34,22 +40,22 @@ export function getRealEstateAgentSchema() {
     logo: `${siteUrl}/logo.svg`,
     image: `${siteUrl}/hero-image.png`,
     description:
-      "Premier luxury real estate brokerage marketplace specializing in modern architectural estates, sky penthouses, and luxury villas.",
-    telephone: "+1-800-555-0199",
+      "Explore luxury properties, modern architectural villas, and premier penthouses with HavenStone Estates. Connect with verified agents today.",
+    telephone: "+1 555 019 2831",
     email: "concierge@havenstone.com",
     priceRange: "$$$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "9600 Wilshire Boulevard",
-      addressLocality: "Beverly Hills",
-      addressRegion: "CA",
-      postalCode: "90212",
+      streetAddress: "100 Ocean Drive, Suite 400",
+      addressLocality: "Miami",
+      addressRegion: "FL",
+      postalCode: "33139",
       addressCountry: "US",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 34.0669,
-      longitude: -118.4004,
+      latitude: 25.7701,
+      longitude: -80.1326,
     },
     openingHoursSpecification: [
       {
@@ -115,7 +121,13 @@ export interface PropertySchemaInput {
  * Generates SingleFamilyResidence / Apartment / RealEstateListing Schema markup.
  */
 export function getPropertyJsonLd(property: PropertySchemaInput) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://havenstone.com";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://rehome-city.vercel.app");
   const propertyUrl = `${siteUrl}/properties/${property.slug}`;
 
   // Determine schema type based on property classification

@@ -11,30 +11,31 @@ export function HeroSection() {
 
   return (
     <motion.section
-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center px-4 w-full overflow-hidden"
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center px-4 w-full overflow-hidden isolate"
       initial={{ opacity: 0.4 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {/* Background Image Layer */}
-      <div className="absolute inset-0 z-0">
+      {/* Hero Background Wrapper */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
         <Image
           src={imgSrc}
-          alt="Luxury modern estate villa background"
+          alt="Luxury Modern Architecture Villa"
           fill
           priority
-          quality={85}
+          quality={95}
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center scale-[1.02]"
           onError={() =>
             setImgSrc(
               "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80"
             )
           }
         />
-        {/* Dark overlay for text contrast & readability */}
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+        {/* Subtle cinematic gradient: clear in center, slight darkening at top for navbar & center for text */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-black/20 via-transparent to-black/40" />
       </div>
 
       {/* Hero Content Layer */}

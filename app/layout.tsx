@@ -18,7 +18,13 @@ const urbanist = Urbanist({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://havenstone.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://rehome-city.vercel.app");
 const siteName = process.env.NEXT_PUBLIC_SITE_NAME || "HavenStone Estates";
 
 export const metadata: Metadata = {
@@ -28,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | HavenStone Estates",
   },
   description:
-    "Discover exceptional luxury residences, modern architectural villas, and premier sky penthouses. HavenStone connects discerning buyers and investors with verified elite properties and bespoke brokerage advisory.",
+    "Explore luxury properties, modern architectural villas, and premier penthouses with HavenStone Estates. Connect with verified agents today.",
   applicationName: siteName,
   authors: [{ name: "HavenStone Realty Inc.", url: siteUrl }],
   creator: "HavenStone Realty",
@@ -64,7 +70,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HavenStone Estates | Luxury Real Estate & Premium Homes",
     description:
-      "Explore curated architectural trophies, private villas, and sky penthouses with verified advisors.",
+      "Explore luxury properties, modern architectural villas, and premier penthouses with HavenStone Estates. Connect with verified agents today.",
     url: siteUrl,
     siteName: siteName,
     locale: "en_US",
@@ -82,7 +88,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HavenStone Estates | Luxury Real Estate & Premium Homes",
     description:
-      "Explore curated architectural trophies, private villas, and sky penthouses with verified advisors.",
+      "Explore luxury properties, modern architectural villas, and premier penthouses with HavenStone Estates. Connect with verified agents today.",
     images: ["/hero-image.png"],
     creator: "@HavenStoneEstates",
   },

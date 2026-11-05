@@ -98,6 +98,10 @@ export const metadata: Metadata = {
 };
 
 import { CompareProvider } from "@/components/compare/compare-context";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-E7X2K9M1Y8";
 
 export default function RootLayout({
   children,
@@ -110,10 +114,30 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Google Analytics / Tag Manager */}
+        {gaId && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
         <SessionProvider>
           <CompareProvider>
             {children}
             <Toaster position="top-right" richColors />
+            <Analytics />
           </CompareProvider>
         </SessionProvider>
       </body>

@@ -83,6 +83,8 @@ export function getRealEstateAgentSchema() {
       "https://twitter.com/HavenStoneEstates",
       "https://instagram.com/HavenStoneEstates",
       "https://linkedin.com/company/havenstone-estates",
+      "https://facebook.com/HavenStoneEstates",
+      "https://youtube.com/@HavenStoneEstates",
     ],
   };
 }

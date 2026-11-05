@@ -91,7 +91,12 @@ export function Footer() {
             <div className="flex flex-col gap-5">
               <span className="text-white">Social</span>
               <div className="flex flex-col gap-3 text-xs text-zinc-300">
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="https://instagram.com/HavenStoneEstates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="HavenStone on Instagram"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -99,7 +104,12 @@ export function Footer() {
                 >
                   Instagram
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="https://linkedin.com/company/havenstone-estates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="HavenStone on LinkedIn"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -107,7 +117,12 @@ export function Footer() {
                 >
                   LinkedIn
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="https://twitter.com/HavenStoneEstates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="HavenStone on Twitter"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -115,13 +130,31 @@ export function Footer() {
                 >
                   Twitter
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="https://facebook.com/HavenStoneEstates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="HavenStone Facebook Page"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                 >
-                  Facebook
+                  Facebook Page
+                </motion.a>
+                <motion.a
+                  href="https://youtube.com/@HavenStoneEstates"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="HavenStone YouTube Channel"
+                  className="hover:text-white transition-colors duration-200"
+                  initial={{ y: 50, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+                >
+                  YouTube Channel
                 </motion.a>
               </div>
             </div>

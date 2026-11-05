@@ -1,0 +1,44 @@
+# HavenStone Estates
+
+> Premier luxury real estate brokerage marketplace connecting discerning buyers, private investors, and sellers with verified architectural estates, modern villas, and sky penthouses.
+
+HavenStone Estates provides bespoke brokerage advisory, curated property listings, confidential off-market acquisitions, and end-to-end transaction coordination across premier global destinations.
+
+## Organization Identity
+- **Business Name**: HavenStone Estates (HavenStone Realty Inc.)
+- **Website URL**: https://rehome-city.vercel.app
+- **Corporate Address**: 100 Ocean Drive, Suite 400, Miami, FL 33139, United States
+- **Direct Telephone**: +1 555 019 2831
+- **Concierge Desk**: concierge@havenstone.com
+- **Price Range**: $$$$ (Ultra-luxury / High-net-worth real estate)
+
+## Primary Navigation Links
+- [Curated Properties](https://rehome-city.vercel.app/properties): Browse verified luxury villas, architectural mansions, and sky penthouses with advanced filtering by price, bedrooms, and location.
+- [About HavenStone](https://rehome-city.vercel.app/#services): Our philosophy, client representation standards, and bespoke advisory methodology.
+- [Private Advisory & Contact](https://rehome-city.vercel.app/#contact): Connect directly with our private acquisition advisors for off-market pocket listings and tour scheduling.
+- [List & Sell Your Property](https://rehome-city.vercel.app/dashboard/properties/new): Multi-step property submission wizard for approved sellers and luxury homeowners.
+- [Compare Properties](https://rehome-city.vercel.app/compare): Side-by-side comparative analysis of luxury residences, amenities, and price-per-square-foot metrics.
+- [Frequently Asked Questions](https://rehome-city.vercel.app/#faq): Comprehensive answers regarding private tours, jumbo financing, client discretion, and transaction timelines.
+
+## Data & Technical Architecture
+- **Framework**: Next.js (App Router, Turbopack, React 19, Tailwind CSS)
+- **Database & ORM**: PostgreSQL via Neon Serverless, Prisma ORM
+- **Authentication**: NextAuth.js (Auth.js v5) with Role-Based Access Control (`ADMIN`, `SELLER`, `BUYER`)
+- **Media Hosting**: Cloudinary & Next.js Image Optimization (WebP/AVIF)
+- **Structured Data**: Schema.org JSON-LD (`RealEstateAgent`, `SingleFamilyResidence`, `Apartment`, `FAQPage`)
+
+## Public Data & Discovery Endpoints
+- [XML Sitemap](https://rehome-city.vercel.app/sitemap.xml): Daily refreshed XML sitemap covering all dynamic approved property slugs and static routes.
+- [Robots Policy](https://rehome-city.vercel.app/robots.txt): Crawler rules and indexing directives for search and AI user-agents.
+- [Interactive Brochure Generator](https://rehome-city.vercel.app/properties/{slug}/brochure): Print-ready luxury property spec-sheets with high-res galleries and floorplans.
+
+## Verification & Trust Protocols
+Every listing featured on HavenStone Estates undergoes a mandatory 7-point due diligence evaluation:
+1. Title deed authenticity and chain-of-custody verification.
+2. Verified physical inspection and architectural boundary confirmation.
+3. Zoning and historical landmark status compliance.
+4. Professional certified appraisal alignment.
+5. High-resolution unretouched spatial photography & 360-degree virtual tour verification.
+6. Encrypted client communications and optional NDA-gated private listings.
+7. End-to-end escrow and legal advisory oversight.
+

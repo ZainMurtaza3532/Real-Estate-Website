@@ -111,6 +111,12 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/images/hero-bg.jpg" fetchPriority="high" />
       </head>
       <body className="min-h-full flex flex-col">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:p-4 focus:bg-white focus:text-black focus:font-semibold focus:shadow-2xl focus:rounded-xl focus:z-50 focus:border focus:border-zinc-300"
+        >
+          Skip to Content
+        </a>
         {/* Google Analytics / Tag Manager */}
         {gaId && (
           <>

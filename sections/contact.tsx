@@ -106,12 +106,19 @@ export function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Name */}
                 <div className="flex flex-col">
-                  <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5">
+                  <label
+                    htmlFor="contact-name"
+                    className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5"
+                  >
                     Your Name *
                   </label>
                   <input
+                    id="contact-name"
+                    name="name"
                     type="text"
                     required
+                    autoComplete="name"
+                    aria-label="Your Full Name"
                     placeholder="Michael Anderson"
                     value={formData.name}
                     onChange={(e) =>
@@ -123,12 +130,19 @@ export function Contact() {
 
                 {/* Email */}
                 <div className="flex flex-col">
-                  <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5">
+                  <label
+                    htmlFor="contact-email"
+                    className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5"
+                  >
                     Email Address *
                   </label>
                   <input
+                    id="contact-email"
+                    name="email"
                     type="email"
                     required
+                    autoComplete="email"
+                    aria-label="Your Email Address"
                     placeholder="michael@luxuryportfolio.com"
                     value={formData.email}
                     onChange={(e) =>
@@ -142,11 +156,18 @@ export function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Phone */}
                 <div className="flex flex-col">
-                  <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5">
+                  <label
+                    htmlFor="contact-phone"
+                    className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5"
+                  >
                     Phone Number
                   </label>
                   <input
+                    id="contact-phone"
+                    name="phone"
                     type="tel"
+                    autoComplete="tel"
+                    aria-label="Your Phone Number"
                     placeholder="+1 (555) 456-7890"
                     value={formData.phone}
                     onChange={(e) =>
@@ -158,11 +179,17 @@ export function Contact() {
 
                 {/* Subject */}
                 <div className="flex flex-col">
-                  <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5">
+                  <label
+                    htmlFor="contact-subject"
+                    className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5"
+                  >
                     Subject / Topic
                   </label>
                   <input
+                    id="contact-subject"
+                    name="subject"
                     type="text"
+                    aria-label="Inquiry Subject or Topic"
                     placeholder="e.g. Acquisition of Beverly Hills Villa"
                     value={formData.subject}
                     onChange={(e) =>
@@ -175,12 +202,18 @@ export function Contact() {
 
               {/* Message */}
               <div className="flex flex-col">
-                <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5">
+                <label
+                  htmlFor="contact-message"
+                  className="text-xs font-semibold text-zinc-700 uppercase tracking-wider mb-1.5"
+                >
                   Message *
                 </label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   rows={4}
                   required
+                  aria-label="Your Message"
                   placeholder="Tell us what you are looking for in terms of location, architectural style, or timeline..."
                   value={formData.message}
                   onChange={(e) =>

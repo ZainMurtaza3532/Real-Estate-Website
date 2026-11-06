@@ -13,7 +13,7 @@ export default function Home() {
   const agentSchema = getRealEstateAgentSchema();
 
   return (
-    <main>
+    <main id="main-content">
       <JsonLd data={agentSchema} />
       <HeroSection />
       <TrustStrip />

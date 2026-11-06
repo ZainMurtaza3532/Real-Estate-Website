@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-white pt-32 pb-24 px-4 md:px-16 lg:px-24 xl:px-32">
+    <main id="main-content" className="min-h-screen bg-white pt-32 pb-24 px-4 md:px-16 lg:px-24 xl:px-32">
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Header */}
         <div className="space-y-4 border-b border-zinc-200 pb-8">

@@ -43,7 +43,7 @@ export function Testimonials() {
     );
 
     return (
-        <section className="py-20 md:py-40 px-4 md:px-16 lg:px-24 xl:px-32 w-full bg-gray-50 overflow-hidden">
+        <section id="testimonials" className="py-20 md:py-40 px-4 md:px-16 lg:px-24 xl:px-32 w-full bg-gray-50 overflow-hidden scroll-mt-24">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-2 justify-start items-start">
 
                 {/* Left Column - Header Details */}

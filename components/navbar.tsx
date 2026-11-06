@@ -53,7 +53,7 @@ export function Navbar() {
             : "md:px-16 lg:px-24 xl:px-32 w-full pt-6"
           }`}
       >
-        <Link href="/" className="flex items-center gap-3 select-none group">
+        <Link href="/" aria-label="HavenStone Estates Homepage" className="flex items-center gap-3 select-none group">
           <Image
             width={140}
             height={36}

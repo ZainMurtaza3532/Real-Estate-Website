@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
@@ -19,7 +20,7 @@ export function Footer() {
 
           {/* Left Brand Details */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6">
-            <a href="#" className="select-none inline-block">
+            <Link href="/" aria-label="HavenStone Estates Homepage" className="select-none inline-block">
               <Image
                 src="/logo.svg"
                 alt="HavenStone Estates"
@@ -28,7 +29,7 @@ export function Footer() {
                 loading="lazy"
                 className="h-8 w-auto"
               />
-            </a>
+            </Link>
             <p className="text-zinc-300 text-sm/5.5 max-w-md">
               Helping buyers, seller and investors find the right property with confidence and expert guidance.
             </p>
@@ -68,7 +69,7 @@ export function Footer() {
                 >
                   Neighborhoods
                 </motion.a>
-                <motion.a href="#contact" className="hover:text-white transition-colors duration-200"
+                <motion.a href="/#contact" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -76,7 +77,7 @@ export function Footer() {
                 >
                   Private Advisors
                 </motion.a>
-                <motion.a href="#testimonials" className="hover:text-white transition-colors duration-200"
+                <motion.a href="/#testimonials" className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -92,7 +93,7 @@ export function Footer() {
               <span className="text-white">Social</span>
               <div className="flex flex-col gap-3 text-xs text-zinc-300">
                 <motion.a
-                  href="https://instagram.com/HavenStoneEstates"
+                  href="https://instagram.com/havenstone"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="HavenStone on Instagram"
@@ -105,7 +106,7 @@ export function Footer() {
                   Instagram
                 </motion.a>
                 <motion.a
-                  href="https://linkedin.com/company/havenstone-estates"
+                  href="https://linkedin.com/company/havenstone"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="HavenStone on LinkedIn"
@@ -118,20 +119,20 @@ export function Footer() {
                   LinkedIn
                 </motion.a>
                 <motion.a
-                  href="https://twitter.com/HavenStoneEstates"
+                  href="https://x.com/havenstone"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="HavenStone on Twitter"
+                  aria-label="HavenStone on X / Twitter"
                   className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 320, damping: 70, mass: 1 }}
                 >
-                  Twitter
+                  Twitter / X
                 </motion.a>
                 <motion.a
-                  href="https://facebook.com/HavenStoneEstates"
+                  href="https://facebook.com/havenstone"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="HavenStone Facebook Page"
@@ -144,7 +145,7 @@ export function Footer() {
                   Facebook Page
                 </motion.a>
                 <motion.a
-                  href="https://youtube.com/@HavenStoneEstates"
+                  href="https://youtube.com/@havenstone"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="HavenStone YouTube Channel"
@@ -163,7 +164,9 @@ export function Footer() {
             <div className="flex flex-col gap-5">
               <span className="text-white">Company</span>
               <div className="flex flex-col gap-3 text-xs text-zinc-300">
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="/about"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -171,7 +174,9 @@ export function Footer() {
                 >
                   About Us
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="/#faq"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -179,7 +184,9 @@ export function Footer() {
                 >
                   FAQ
                 </motion.a>
-                <motion.a href="#" className="hover:text-white transition-colors duration-200"
+                <motion.a
+                  href="/about#careers"
+                  className="hover:text-white transition-colors duration-200"
                   initial={{ y: 50, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -197,9 +204,9 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-5 text-xs text-zinc-300">
           <p>Copyright {new Date().getFullYear()} © HavenStone Realty. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-white transition-colors duration-200">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors duration-200">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors duration-200">Cookie Policy</a>
+            <Link href="/privacy" className="hover:text-white transition-colors duration-200">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors duration-200">Terms of Service</Link>
+            <Link href="/privacy#cookies" className="hover:text-white transition-colors duration-200">Cookie Policy</Link>
           </div>
         </div>
       </div>

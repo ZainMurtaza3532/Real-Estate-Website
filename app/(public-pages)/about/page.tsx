@@ -16,7 +16,7 @@ const leadershipTeam = [
     name: "Julian Vance",
     role: "Founder & Chief Executive Broker",
     bio: "Over 20 years guiding high-net-worth families, institutional funds, and private clients through trophy architectural acquisitions across South Florida, Beverly Hills, and Manhattan.",
-    license: "FL Real Estate Broker #BK3291048",
+    license: "FL Broker Lic. #RE-90210 / #BK3291048",
   },
   {
     name: "Elena Rostova",

@@ -209,6 +209,9 @@ export function Footer() {
             <Link href="/privacy#cookies" className="hover:text-white transition-colors duration-200">Cookie Policy</Link>
           </div>
         </div>
+        <p className="pt-4 text-[11px] text-zinc-400 text-center sm:text-left leading-relaxed">
+          Disclaimer: All property descriptions, square footage, dimensions, and financial data are for informational purposes and deemed reliable but not guaranteed. Equal Housing Opportunity.
+        </p>
       </div>
     </footer>
   );

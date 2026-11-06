@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown, HelpCircle, ExternalLink } from "lucide-react";
 
 interface FaqItem {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 }
 
 const faqs: FaqItem[] = [
@@ -17,13 +17,39 @@ const faqs: FaqItem[] = [
   },
   {
     question: "What financing and mortgage options are available?",
-    answer:
-      "HavenStone collaborates with premier private wealth banks and boutique lenders specializing in jumbo loans, cross-border financing, and tailored asset-backed lending with competitive fixed and adjustable rates designed for high-net-worth investors.",
+    answer: (
+      <span>
+        HavenStone collaborates with premier private wealth banks and boutique lenders specializing in jumbo loans, cross-border financing, and tailored asset-backed lending with competitive fixed and adjustable rates. For macroeconomic benchmarks, review the latest{" "}
+        <a
+          href="https://www.federalreserve.gov/releases/h15/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-medium text-zinc-950 hover:text-zinc-700 inline-flex items-center gap-1"
+        >
+          Federal Reserve Mortgage Rates & Selected Interest Data
+          <ExternalLink className="size-3 inline" />
+        </a>
+        .
+      </span>
+    ),
   },
   {
     question: "Are HavenStone property listings verified for authenticity?",
-    answer:
-      "Yes. Every estate featured on HavenStone Estates undergoes a thorough 7-point due diligence check, verifying legal title, deed history, zoning compliance, and architectural documentation before being approved for our public portfolio or private off-market collection.",
+    answer: (
+      <span>
+        Yes. Every estate featured on HavenStone Estates undergoes a rigorous 7-point due diligence check, verifying legal title, deed history, zoning compliance, and architectural documentation before public or private showcase. All represented agents strictly abide by the{" "}
+        <a
+          href="https://www.nar.realtor/about-nar/governing-documents/code-of-ethics"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-medium text-zinc-950 hover:text-zinc-700 inline-flex items-center gap-1"
+        >
+          National Association of Realtors (NAR) Code of Ethics
+          <ExternalLink className="size-3 inline" />
+        </a>
+        .
+      </span>
+    ),
   },
   {
     question: "How does HavenStone protect privacy for high-profile clients?",
@@ -34,6 +60,34 @@ const faqs: FaqItem[] = [
     question: "What is the typical timeline for closing a luxury transaction?",
     answer:
       "All-cash purchases often finalize within 10 to 14 business days. Purchases requiring specialized financing or bespoke legal structures typically close within 30 to 45 days. Our dedicated closing advisors oversee escrow, title insurance, and inspections seamlessly.",
+  },
+  {
+    question: "Where can I review authoritative luxury housing market trends?",
+    answer: (
+      <span>
+        In addition to our bespoke quarterly market reports, we cross-reference independent residential velocity and pricing data published by the{" "}
+        <a
+          href="https://www.nar.realtor/research-and-statistics"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-medium text-zinc-950 hover:text-zinc-700 inline-flex items-center gap-1"
+        >
+          NAR Research & Real Estate Statistics
+          <ExternalLink className="size-3 inline" />
+        </a>
+        {" "}and the{" "}
+        <a
+          href="https://fred.stlouisfed.org/categories/97"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-medium text-zinc-950 hover:text-zinc-700 inline-flex items-center gap-1"
+        >
+          St. Louis Fed Economic Housing Data (FRED)
+          <ExternalLink className="size-3 inline" />
+        </a>
+        .
+      </span>
+    ),
   },
 ];
 

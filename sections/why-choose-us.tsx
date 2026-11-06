@@ -126,6 +126,30 @@ export function WhyChooseUs() {
                             />
                         ))}
                     </motion.div>
+
+                    {/* Author & Founder Expertise Snippet */}
+                    <motion.div
+                        className="mt-6 p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs flex items-center gap-4 max-w-full"
+                        initial={{ y: 30, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3, type: "spring", stiffness: 320, damping: 70 }}
+                    >
+                        <div className="size-12 rounded-full bg-zinc-950 text-white font-serif font-bold text-sm flex items-center justify-center shrink-0">
+                            JV
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-zinc-900">Julian Vance</span>
+                                <span className="text-[10px] font-mono bg-zinc-100 text-zinc-700 px-1.5 py-0.5 rounded font-medium">
+                                    Lic. #RE-90210
+                                </span>
+                            </div>
+                            <p className="text-xs text-zinc-600 mt-0.5 leading-relaxed">
+                                Founder & Managing Broker • 20+ years guiding $500M+ in ultra-luxury acquisitions. Active member of the National Association of Realtors (NAR).
+                            </p>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
